@@ -287,10 +287,10 @@ function SessionComplete({ sessionTotal, nextReview, notifyState, reminderError,
         </p>
       )}
 
-      {nextReview && notifyState === "idle" && (
-        <button onClick={onNotifyMe} style={notifyBtnStyle}>
-          Remind me
-        </button>
+      {/* {nextReview && notifyState === "idle" && (
+        // <button onClick={onNotifyMe} style={notifyBtnStyle}>
+        //   Remind me
+        // </button>
       )}
       {notifyState === "scheduled" && (
         <p style={{ color: PALETTE.textDim, fontSize: "13px" }}>
@@ -299,7 +299,7 @@ function SessionComplete({ sessionTotal, nextReview, notifyState, reminderError,
       )}
       {reminderError && (
         <p style={{ color: "#B3452F", fontSize: "13px" }}>{reminderError}</p>
-      )}
+      )} */}
     </>
   );
 }

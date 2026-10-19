@@ -1,4 +1,3 @@
-// import {  Linkedin } from "lucide-react";
 
 
 export function Footer() {

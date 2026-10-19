@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { supabase } from "../../../supabaseclient";
-import { Navigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 
 // simple, functional names — bg/panel describe where the color goes,
 // not what the color looks like, so swapping values later stays easy
 
-
-
-
-const clickSound= new Audio("./au");
-
-
-const playSound = () => {
-  clickSound.currentTime = 0;
-  clickSound.play().catch(() => {});
-};
 
 
 const theme = {
@@ -39,6 +28,7 @@ export const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [tilted, setTilted] = useState(false);
+  const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -53,6 +43,7 @@ export const Signup = () => {
     const { data, error } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
+      emailRedirectTo: `${siteUrl}/signin`,
       options: {
         data: {
           first_name: form.name,
@@ -93,7 +84,7 @@ export const Signup = () => {
           src="https://i.pinimg.com/736x/71/f7/3f/71f73f54dada870520d3548ad69600a8.jpg"
           alt="meow"
           className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl -z-10 transition-all duration-3500"
-          onMouseDown={playSound}
+          
           
           style={{
             transform: tilted ? "translate(-314px, -24px)" : "translate(0px, 1px)",

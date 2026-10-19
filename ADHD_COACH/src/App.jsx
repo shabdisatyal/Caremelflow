@@ -6,14 +6,13 @@ import { NavButtons } from '../frontend/components/NavButtons';
 import { Home } from '../frontend/components/pages/home';
 import Manage from '../frontend/components/pages/manage';
 import { Flashcard } from '../frontend/components/flashcards';
-import { Subjects } from '../frontend/components/pages/subjects';
 import { Study } from '../frontend/components/pages/study';
 import { Signup } from '../frontend/components/pages/signup';
 import { Profile } from '../frontend/components/pages/profile';
 import { Signin } from '../frontend/components/pages/signin';
 import { Footer } from '../frontend/components/pages/Footer';
 import { ResetPassword } from '../frontend/components/pages/resetpw';
-
+import Subjects from '../frontend/components/SUBJECTS/components/Subjects';
 
 
 
@@ -30,7 +29,7 @@ function AnimatedRoutes() {
         <Route path='/reset-password' element={<ResetPassword/>} />
         <Route path='/flashcard' element={<ProtectedRoute><Flashcard/></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/subjects" element={<ProtectedRoute><Subjects /></ProtectedRoute>} />
+        <Route path="/subjects" element={<ProtectedRoute><Subjects/></ProtectedRoute>} />
       
         <Route path="/manage" element={<ProtectedRoute><Manage /></ProtectedRoute>} />
         <Route path="*" element={<div>oh! you landed to 'OUT OF THE BOX' </div>} />
