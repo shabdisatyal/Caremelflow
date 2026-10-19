@@ -2,7 +2,7 @@
 
 > **Beta version.** Caremel is still being built, and more updates are coming.
 
-<img width="1411" height="751" alt="Screenshot 2026-10-06 at 08 30 45" src="https://github.com/user-attachments/assets/8060e9f9-8488-4145-bd84-295d776ceaa1" />
+
 
 ## Starting when you feel overwhelmed
 
