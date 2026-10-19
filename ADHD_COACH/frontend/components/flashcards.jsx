@@ -271,7 +271,7 @@ function SessionComplete({ sessionTotal, nextReview, notifyState, reminderError,
 
   return (
     <>
-      <p style={{ fontSize: "40px", margin: 0 }}>{justFinished ? ":3" : "✨"}</p>
+     
       <p style={{ color: PALETTE.text, fontWeight: 600, fontSize: "20px", margin: 0 }}>
         {justFinished ? "You're done for today!" : "All caught up"}
       </p>

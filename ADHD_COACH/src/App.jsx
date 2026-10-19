@@ -11,6 +11,7 @@ import { Signup } from '../frontend/components/pages/signup';
 import { Profile } from '../frontend/components/pages/profile';
 import { Signin } from '../frontend/components/pages/signin';
 import { Footer } from '../frontend/components/pages/Footer';
+import { Analytics } from "@vercel/analytics/next"
 import { ResetPassword } from '../frontend/components/pages/resetpw';
 import Subjects from '../frontend/components/SUBJECTS/components/Subjects';
 
@@ -21,6 +22,7 @@ function AnimatedRoutes() {
   return (
     <div key={location.pathname} className="page-fade">
       <Routes location={location}>
+        <Analytics/>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/study" element={<ProtectedRoute> <Study /> </ProtectedRoute>} />
