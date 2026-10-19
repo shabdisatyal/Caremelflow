@@ -31,7 +31,7 @@ export function Card({ text, label }) {
     
     >
       <img
-        src="https://i.pinimg.com/1200x/b6/4f/bb/b64fbb78070aa8db5275423437b4e576.jpg"
+        src="src/assets/hero.jpg"
         alt={label}
         className="absolute inset-0 w-full h-full object-cover"
       />
