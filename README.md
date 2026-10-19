@@ -1,74 +1,40 @@
-<h1 style="color:#FF6B9D;">Caremel: Study Companion Built for ADHD Brains</h1>
+# Caremel
+
+> **Beta version.** Caremel is still being built, and more updates are coming.
+
+<img width="1411" height="751" alt="Screenshot 2026-10-06 at 08 30 45" src="https://github.com/user-attachments/assets/8060e9f9-8488-4145-bd84-295d776ceaa1" />
+
+## Starting when you feel overwhelmed
 
 
-Most study and productivity apps are designed around neurotypical attention, motivation, and memory. They assume you can hold many tasks in working memory at once, start work based on "importance" alone, sustain long streaks and rigid schedules, and stay motivated by distant rewards like "finish this course in three months."
+<p align="center"> 
 
-For people with ADHD, those assumptions often don't hold. When the app doesn't work, it isn't a discipline problem. It's a mismatch between the tool's assumptions and how attention actually functions.
 
-Caremel is built around how ADHD attention, memory, and motivation actually work, with design choices grounded in research rather than generic productivity conventions.
+<img width="1511" height="851" alt="Screenshot 2026-10-06 at 09 06 01" src="https://github.com/user-attachments/assets/39b0d76c-d09e-43c4-adcb-aabfa14d383b" />
+  
+We usually feel overwhelmed when we look at our deadlines and see what we actually have to do. That is why Caremel puts an "I can't start" button inside subject management itself, so you can begin without leaving the page.
 
-***
-![](https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3a3FqdHFjcGw0bHh6Ym4wOG05eXg0ZWJ2ZHd6OGF5NjhmdGJudzhjcyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/3uAZMGc0s8olvshtTp/giphy.gif)
-## Why ADHD attention is different
 
-ADHD affects core executive functions: attention regulation, working memory, inhibition, planning, and time perception.
+  <img width="1511" height="851" alt="Screenshot 2026-10-06 at 08 47 44" src="https://github.com/user-attachments/assets/e075e752-47db-4333-9100-5de31a20c191" />
+</p>
 
-* **Working memory** is measurably reduced compared to neurotypical peers, making it harder to hold multiple tasks, steps, or deadlines in mind simultaneously.
-* **Task initiation and switching** are disproportionately difficult, even for tasks the person genuinely wants to do. Starting is often the hardest part, not sustaining.
-* **Time perception** tends to compress into "now" versus "not now," making duration estimates and linking present effort to future outcomes harder.
-* **Reward processing** tends to underweight delayed rewards relative to immediate interest or urgency, so abstract, distant goals don't reliably generate the internal signal needed to start or sustain effort.
+Each time you press it, you check in with how you feel and what is making it hard to start. Your answers are saved to your own account and used only for your analysis and reports.
 
-These are documented differences in cognitive systems, not personality traits. See, for example, research on executive function and self regulation in ADHD from NIH's PMC archive: [Barkley, executive function and ADHD](https://pmc.ncbi.nlm.nih.gov/articles/PMC11904913/) and [time perception and delay aversion in ADHD](https://pmc.ncbi.nlm.nih.gov/articles/PMC12854323/).
+The check in leads into a 5 minute reset session that you actually have to go through. Switching tabs halts the countdown, so the reset cannot turn into another round of "just one quick look at YouTube."
 
-***
+<img width="100%" alt="Screenshot 2026-10-06 at 08 27 27" src="https://github.com/user-attachments/assets/8d879042-60eb-4cf7-8c6f-0ab457c180fe" />
 
-## Why typical productivity apps backfire for ADHD
+When the reset ends, Caremel shows you the one thing that needs to be done and takes you to a focus session. Every time you show up, it is recorded in your progress chart and in the heat map on your profile.
 
-<img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NWR0bXZ3aTU3bjE4MGU3anRkYnE3Z3p0czlicHkyazV0M2Q3YmhqZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/m53U5yRin78f1nKtbv/giphy.gif" width="150">
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b61e5bbd-5ef9-40c6-8f6f-5b5b078245f7" alt="The one thing to focus on" width="49%" />
+  <img src="https://github.com/user-attachments/assets/935baaea-44f4-4c2b-af92-7f72201d1b54" alt="A focus session" width="49%" />
+</p>
 
-Mainstream apps generally assume a user who can scan long lists and self prioritize, respond well to streaks and completion percentages, and tolerate frequent task switching and high cognitive load. Several common patterns work against ADHD attention specifically:
+<img src="https://github.com/user-attachments/assets/759c43eb-3ec8-4883-b0fe-50fc7cfcbd7e" alt="Progress chart and profile heat map" width="100%" />
 
-* **Everything visible task lists** put every item at equal visual weight, forcing constant reprioritization and creating decision paralysis rather than a productive to do queue.
-* **Streaks and percentage complete metrics** can read as judgment rather than progress. A broken streak or a low percentage becomes evidence of failure, which tends to trigger disengagement rather than renewed effort, especially alongside rejection sensitive tendencies common in ADHD.
-* **Long, passive study sessions** (re reading, long lecture blocks) are hard to sustain without active engagement, and attention drop off during passive review reduces retention regardless of time invested.
-* **High setup, high maintenance systems** (elaborate tagging, custom views) add friction before the actual work starts, when a tool meant to reduce effort should be removing friction, not adding it.
+## Flashcards that adapt to you
 
-***
+Your flashcards become active at different times, depending on how much of the material you already know. Cards you know well come back later, and cards you are still learning come back sooner. Every review counts toward your progress too, including your cards mastered and the completion of each deck on your profile.
 
-## What Caremel does differently
-
-Each core feature maps to one of the problems above.
-
-### Periodic active recall instead of passive review
-Caremel surfaces material at spaced intervals for active retrieval practice rather than passive re reading. Active recall and spaced repetition are well supported as producing stronger long term retention than passive review across learners generally, and short, active sessions align better with attention patterns that struggle with long, undifferentiated study blocks than passive alternatives do.
-
-### One active deadline and one active topic at a time
-Rather than surfacing every deadline and subject simultaneously, Caremel deliberately narrows the visible focus to a single active deadline and topic. This directly targets the working memory and task switching costs described above, reducing the number of competing priorities a user has to hold and re evaluate at once.
-
-### Progress reported as hours focused and material covered, not percentages
-Caremel intentionally avoids "X% complete" framing. Instead it reports concrete effort and output: hours actually focused, and material concretely worked through. This avoids all or nothing framing where an incomplete percentage reads as failure, and instead reinforces the effort itself, which is closer to how immediate, tangible feedback tends to sustain motivation than a distant completion score.
-
-### Minimal, focused interface
-Screens are stripped to one clear next action with minimal visual clutter, reducing the working memory burden of parsing a busy dashboard before even starting the actual work.
-
-### Short, structured sessions with externalized structure
-Rather than requiring the user to self initiate everything, Caremel decides what to study next, when to review it, and which deadline is currently relevant. This reduces the task initiation barrier, which research consistently identifies as one of the most difficult steps in ADHD, independent of motivation.
-
-### Non punitive, neutral feedback
-Caremel avoids red "overdue" indicators, punitive language, and streaks that read as failure when broken. Feedback is phrased neutrally ("Next session ready," "3 hours focused this week") to avoid triggering the shame driven avoidance that harsher feedback patterns can produce.
-
-***
-
-## A note on the research basis
-
-The mechanisms above (working memory limits, task initiation difficulty, time perception, delayed reward discounting) are grounded in peer reviewed literature on ADHD and executive function, linked inline. Broader design commentary, how these translate into interface choices, draws on general UX and interaction design reasoning for cognitive load reduction rather than ADHD specific peer reviewed studies, since that literature is thinner. Any claim in this README that isn't backed by a specific citation should be read as design reasoning, not an established finding. Flag anything that needs a firmer source before this goes anywhere public facing.
-
-***
-
-## Project Status
-
-Caremel is under active development. Current work includes the active recall scheduling logic, the deadline and topic fixation flow, and the hours and materials progress view.
-
-***
-
-Thanku for reading ^^ 
+(:3) 
