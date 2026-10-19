@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="Nonheader min-h-screen bg-[#DFF1F1]">
       <AuthProvider>
-        <header className="bg-[#FFFAF0] flex flex-col items-start pt-6 pb-3">
+        <header className="bg-white flex flex-col items-start pt-6 pb-3">
           <Link to="/">
             <h1 className="titletext font-fascinate ml-8 text-5xl">Careme⟌</h1>
           </Link>
