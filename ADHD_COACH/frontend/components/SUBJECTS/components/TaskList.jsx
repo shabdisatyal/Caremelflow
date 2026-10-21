@@ -1,47 +1,27 @@
+import { useMemo } from 'react';
+import { deadlineLabel } from '../utils/dates';
+import { monthFocus, monthSentence, tagColor } from '../utils/tasks';
 
-import { KIND_LABEL } from './constants';
-import { deadlineLabel, formatTime } from '../utils/dates';
-import TagPill from './ui/TagPill';
-
-
-export default function TaskList({ title, items, empty, onToggle, footer }) {
+export default function ThisMonth({ items }) {
+  const groups = useMemo(() => monthFocus(items), [items]);
   return (
-    <section className="rounded-3xl border border-[#E6DCC9] bg-white p-6">
-      <h2 className="text-xl font-semibold text-[#4A2F20]">{title}</h2>
-      {items.length === 0 ? (
-        <p className="mt-4 text-sm text-[#7a6a5a]">{empty}</p>
+    <section className="rounded-3xl border border-[color-mix(in_srgb,var(--accent)_40%,transparent)] bg-[var(--panel)] p-6">
+      <h2 className="text-xl font-semibold text-[var(--text)]">Important this month</h2>
+      {groups.length === 0 ? (
+        <p className="mt-3 text-sm text-[var(--text)] opacity-70">
+          Your tests and deadlines will show up here
+        </p>
       ) : (
-        <ul className="mt-4 max-h-[22rem] space-y-3 overflow-y-auto pr-1" tabIndex={0} aria-label={`${title} list`}>
-          {items.map((t) => (
-            <li key={t.source + t.id} className="flex items-start gap-3 border-b border-[#EFE6D6] pb-3 last:border-0 last:pb-0">
-              {onToggle && (
-                <input
-                  type="checkbox"
-                  checked={!!t.done}
-                  onChange={() => onToggle(t.id)}
-                  aria-label={`Mark ${t.text} done`}
-                  className="mt-1.5 h-4 w-4 accent-[#3B5B3F]"
-                />
-              )}
-              <div>
-                <p className={'text-[#4A2F20] ' + (t.done ? 'line-through opacity-60' : '')}>{t.text}</p>
-                <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-[#7a6a5a]">
-                  <TagPill tag={t.tag} />
-                  {t.kind !== 'task' && (
-                    <span className="font-medium text-[#3B5B3F]">{KIND_LABEL[t.kind]}</span>
-                  )}
-                  <span>
-                    {[deadlineLabel(t.deadline), t.time && 'at ' + formatTime(t.time)]
-                      .filter(Boolean)
-                      .join(' ')}
-                  </span>
-                </p>
-              </div>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          {groups.map((g) => (
+            <li key={g.tag} className="rounded-2xl p-4" style={{ background: tagColor(g.tag) }}>
+              <p className="text-lg font-semibold text-[var(--text)]">{g.tag}</p>
+              <p className="text-sm text-[var(--text)]">{monthSentence(g)}</p>
+              <p className="mt-1 text-xs text-[var(--text)] opacity-75">Next: {deadlineLabel(g.next)}</p>
             </li>
           ))}
         </ul>
       )}
-      {footer}
     </section>
   );
 }

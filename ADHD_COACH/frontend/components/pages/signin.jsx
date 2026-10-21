@@ -167,22 +167,16 @@ export const Signin = () => {
             )}
 
             <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-md py-3 font-bold text-[var(--ink)] bg-[var(--button)] hover:bg-[var(--button-hover)] transition-colors disabled:opacity-60"
-            >
-              {loading ? "logging in..." : "login"}
-            </button>
+                type="submit"
+                disabled={loading}
+                className="-rotate-1 w-full rounded-full border-[3px] border-[var(--text)] bg-[var(--button)] py-3 text-sm font-semibold uppercase tracking-widest text-[var(--ink)] shadow-[4px_4px_0_var(--muted)] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--muted)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+              >
+                {loading ? "logging in..." : "login"}
+              </button>
           </form>
 
           <div className="flex items-center justify-between mt-6 text-sm">
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="text-[var(--muted)] underline bg-transparent border-none cursor-pointer hover:text-[var(--text)] transition-colors"
-            >
-              forgot password?
-            </button>
+ 
               <Link to="/signup" className="text-[var(--muted)]">
                     new here?{" "}
                     <span className="text-[var(--text)] font-semibold">create account</span>

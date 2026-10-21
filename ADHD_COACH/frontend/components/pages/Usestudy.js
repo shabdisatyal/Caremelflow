@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../../../supabaseclient";
 
-// Logic for the Study page: settings, timer, session saving, Spotify link.
-// The UI lives in Study.jsx.
 
 export const BACKGROUNDS = [
   { id: "cream", name: "Cream", bg: "#F5EFE1", dark: false },

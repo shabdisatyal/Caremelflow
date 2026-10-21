@@ -25,4 +25,10 @@ export const OVERLAY_COLOR = '#B0C4D4';
 
 export const KIND_LABEL = { task: 'Task', deadline: 'Deadline', test: 'Test' };
 export const KIND_WEIGHT = { task: 1, deadline: 2, test: 3 };
-export const TAG_COLORS = ['#EFDCC8', '#C2D4DC', '#CEE2C6', '#EDD9E0', '#D9D1EE'];
+export const TAG_COLORS = [
+  'color-mix(in srgb, var(--accent) 50%, transparent)',
+  'color-mix(in srgb, var(--dots) 45%, transparent)',
+  'color-mix(in srgb, var(--button) 25%, transparent)',
+  'color-mix(in srgb, var(--accent) 30%, var(--dots))',
+  'color-mix(in srgb, var(--button) 15%, var(--accent))',
+];

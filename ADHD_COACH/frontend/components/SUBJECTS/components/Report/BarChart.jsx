@@ -7,20 +7,20 @@ export default function BarChart({ data }) {
         {data.map((d) => (
           <div key={d.key} title={`${d.short}: ${d.minutes} min`} className="flex h-full flex-1 flex-col justify-end">
             <div
-              className="rounded-t bg-[#3B5B3F]"
+              className="rounded-t bg-[var(--button)]"
               style={{ height: `${(d.minutes / max) * 100}%`, minHeight: d.minutes ? 4 : 0 }}
             />
           </div>
         ))}
       </div>
       {data.length <= 7 ? (
-        <div className="mt-1 flex gap-1 text-[10px] text-[#7a6a5a]">
+        <div className="mt-1 flex gap-1 text-[10px] text-[var(--text)] opacity-70">
           {data.map((d) => (
             <span key={d.key} className="flex-1 text-center">{d.short}</span>
           ))}
         </div>
       ) : (
-        <div className="mt-1 flex justify-between text-[10px] text-[#7a6a5a]">
+        <div className="mt-1 flex justify-between text-[10px] text-[var(--text)] opacity-70">
           <span>{data[0].key.slice(5)}</span>
           <span>{data[data.length - 1].key.slice(5)}</span>
         </div>

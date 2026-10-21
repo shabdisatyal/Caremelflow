@@ -3,8 +3,6 @@ import { supabase } from "../../supabaseclient.js"; // adjust path to match your
 import { getNextUpcomingReview } from "./cards.js";
 
 
-//  Clicking "remind me" inserts a row in `reminders`-- a server-side Edge Function does the actual emailing on its own
-// schedule, independent of whether this tab — or any tab — is open.
 
 export function useReviewReminder({ deckId, loading, total, sessionTotal }) {
   const [nextReview, setNextReview] = useState(null);

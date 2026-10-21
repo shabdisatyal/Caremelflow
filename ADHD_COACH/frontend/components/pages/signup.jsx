@@ -193,13 +193,13 @@ export const Signup = () => {
                 <p className="text-sm text-[var(--button)] -mt-2">{statusMsg}</p>
               )}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded-full py-3 font-bold text-[var(--ink)] bg-[var(--button)] hover:bg-[var(--buttonHover)] transition-colors disabled:opacity-60"
-              >
-                {loading ? "signing up..." : "sign up"}
-              </button>
+             <button
+                  type="submit"
+                  disabled={loading}
+                  className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-sm font-semibold uppercase tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+                >
+                  {loading ? "signing up..." : "sign up"}
+                </button>
             </form>
 
             <div className="flex items-center justify-between mt-6 text-sm">

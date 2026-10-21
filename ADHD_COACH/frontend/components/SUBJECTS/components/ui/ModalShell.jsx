@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { OVERLAY_COLOR } from '../constants';
 
 export default function ModalShell({ label, children, onClose }) {
   useEffect(() => {
@@ -9,15 +8,12 @@ export default function ModalShell({ label, children, onClose }) {
   }, [onClose]);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: OVERLAY_COLOR }}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--accent)] p-4">
       <div
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-[#FFFAF3] p-6 shadow-xl sm:p-8"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-[var(--bg)] p-6 shadow-xl sm:p-8"
       >
         {children}
       </div>

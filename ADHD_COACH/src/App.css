@@ -1,9 +1,11 @@
 body {
-  font-size: 16px;
- 
   
   font-family: "Lexend", sans-serif;
-  background-color: #EBF4DD
+  background-color: none;
+}
+
+html {
+  font-size: 20px; 
 }
 
 .lexend-headerfont {

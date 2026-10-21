@@ -5,10 +5,10 @@ export default function Chip({ selected, onClick, children }) {
       onClick={onClick}
       aria-pressed={selected}
       className={
-        'rounded-full border px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3B5B3F] ' +
+        'rounded-full border px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button)] ' +
         (selected
-          ? 'border-[#3B5B3F] bg-[#3B5B3F] text-[#FFFAF3]'
-          : 'border-[#D9CDB8] bg-white text-[#4A2F20] hover:border-[#3B5B3F]')
+          ? 'border-[var(--button)] bg-[var(--button)] text-[var(--ink)]'
+          : 'border-[var(--accent)] bg-[var(--panel)] text-[var(--text)] hover:border-[var(--button)]')
       }
     >
       {children}

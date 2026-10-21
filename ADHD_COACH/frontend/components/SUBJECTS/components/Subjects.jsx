@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ITEMS_KEY} from './constants'
+import { ITEMS_KEY } from './constants';
 import { useStored } from '../hooks/useStored';
 import { ymd, dayDiff, parseDate } from '../utils/dates';
 import { flattenTasks, isToday, parseQuick } from '../utils/tasks';
@@ -12,8 +12,6 @@ import DayModal from './Calendar/DayModal';
 import Report from './Report/Report';
 import CantStartCard from './CantStart/CantStartCard';
 import CantStartFlow from './CantStart/CantStartFlow';
-
-
 
 export function Subjects() {
   const [flowOpen, setFlowOpen] = useState(false);
@@ -52,12 +50,11 @@ export function Subjects() {
   }
 
   return (
-    <main className="min-h-screen w-full bg-[#F4EEE2] px-4 py-8 sm:px-8">
+    <main className="min-h-screen w-full bg-[var(--bg)] px-4 py-8 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            
-            <p className="text-[#7a6a5a]">
+            <p className="text-[var(--text)] opacity-70">
               {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
           </div>
@@ -77,7 +74,6 @@ export function Subjects() {
                 items={todayList}
                 empty="Nothing for today"
                 onToggle={toggleItem}
-                
               />
               <TaskList
                 title="To do deadlines"

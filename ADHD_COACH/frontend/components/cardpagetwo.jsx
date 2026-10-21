@@ -150,7 +150,7 @@ function StatSection({ stat, index }) {
         }`}
       >
         <p
-          className={`font-fascinate leading-none mb-3 sm:mb-4 tabular-nums break-words ${
+          className={`font-child leading-none mb-3 sm:mb-4 tabular-nums break-words ${
             dark ? "text-[var(--warm)]" : "text-[var(--forest)]"
           }`}
           style={{ fontSize: "clamp(2.75rem, 14vw, 7rem)" }}

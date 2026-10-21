@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 
-
 import { RESET_SECONDS } from '../constants';
 import { pad } from '../../utils/dates';
 import ModalShell from '../ui/ModalShell';
 import { quietBtn } from '../ui/styles';
-
-
 
 export default function ResetStep({ onDone }) {
   const [left, setLeft] = useState(RESET_SECONDS);
@@ -33,21 +30,21 @@ export default function ResetStep({ onDone }) {
   return (
     <ModalShell label="Breathing reset">
       <div className="flex flex-col items-center text-center">
-        <h2 className="text-2xl font-semibold text-[#4A2F20]">Breathe. You have time.</h2>
+        <h2 className="text-2xl font-semibold text-[var(--text)]">Breathe. You have time.</h2>
         <div className="relative my-8 flex h-56 w-56 items-center justify-center">
           <div
             aria-hidden="true"
-            className="absolute h-56 w-56 rounded-full bg-[#B0C4D4]"
+            className="absolute h-56 w-56 rounded-full bg-[var(--accent)]"
             style={{
               transform: `scale(${started && inhale ? 1 : 0.6})`,
               transition: reduceMotion ? 'none' : `transform ${inhale ? 4 : 6}s ease-in-out`,
             }}
           />
-          <p className="relative text-xl font-medium text-[#4A2F20]" aria-live="polite">
+          <p className="relative text-xl font-medium text-[var(--text)]" aria-live="polite">
             {inhale ? 'Breathe in' : 'Breathe out'}
           </p>
         </div>
-        <p className="text-3xl font-semibold tabular-nums text-[#3B5B3F]">
+        <p className="text-3xl font-semibold tabular-nums text-[var(--button)]">
           {pad(Math.floor(left / 60))}:{pad(left % 60)}
         </p>
         <button type="button" onClick={onDone} className={'mt-6 ' + quietBtn}>

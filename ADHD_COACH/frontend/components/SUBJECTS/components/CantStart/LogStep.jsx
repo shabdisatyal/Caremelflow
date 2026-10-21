@@ -15,33 +15,33 @@ export default function LogStep({ onSubmit, onClose }) {
 
   return (
     <ModalShell label="Check in" onClose={onClose}>
-      <h2 className="text-2xl font-semibold text-[#4A2F20]">Let us check in first</h2>
-      <p className="mt-1 text-sm text-[#7a6a5a]">No wrong answers. This takes under a minute.</p>
+      <h2 className="text-2xl font-semibold text-[var(--text)]">Let us check in first</h2>
+      <p className="mt-1 text-sm text-[var(--text)] opacity-70">No wrong answers. This takes under a minute.</p>
 
-      <p className="mt-6 text-sm font-medium text-[#4A2F20]">How are you feeling?</p>
+      <p className="mt-6 text-sm font-medium text-[var(--text)]">How are you feeling?</p>
       <div className="mt-2 flex flex-wrap gap-2">
         {MOODS.map((m) => (
           <Chip key={m} selected={mood === m} onClick={() => setMood(m)}>{m}</Chip>
         ))}
       </div>
 
-      <p className="mt-6 text-sm font-medium text-[#4A2F20]">What is making it hard to start?</p>
+      <p className="mt-6 text-sm font-medium text-[var(--text)]">What is making it hard to start?</p>
       <div className="mt-2 flex flex-wrap gap-2">
         {REASONS.map((r) => (
           <Chip key={r} selected={reasons.includes(r)} onClick={() => toggle(r)}>{r}</Chip>
         ))}
       </div>
 
-      <label className="mt-6 block text-sm font-medium text-[#4A2F20]" htmlFor="energy">
+      <label className="mt-6 block text-sm font-medium text-[var(--text)]" htmlFor="energy">
         Energy right now: {energy} of 5
       </label>
       <input
         id="energy" type="range" min="1" max="5" value={energy}
         onChange={(e) => setEnergy(Number(e.target.value))}
-        className="mt-2 w-full accent-[#3B5B3F]"
+        className="mt-2 w-full accent-[var(--button)]"
       />
 
-      <label className="mt-6 block text-sm font-medium text-[#4A2F20]" htmlFor="note">
+      <label className="mt-6 block text-sm font-medium text-[var(--text)]" htmlFor="note">
         Anything else? (optional)
       </label>
       <textarea id="note" rows={2} value={note} onChange={(e) => setNote(e.target.value)} className={'mt-2 ' + field} />

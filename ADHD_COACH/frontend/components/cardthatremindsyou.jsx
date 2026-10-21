@@ -21,39 +21,6 @@ export function useFolderShuffle(text, startIndex = 0) {
   };
 }
 
-export function Card({ text, label }) {
-  const { currentText, currentIndex, shuffle } = useFolderShuffle(text);
-
-  return (
-    <div
-      className="TextShufflerContainer relative w-screen h-dvh overflow-hidden"
-      onClick={shuffle}
-    
-    >
-      <img
-        src="src/assets/hero.jpg"
-        alt={label}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-
-      <div className="absolute inset-0 flex items-center justify-center px-6">
-        <p className="text-[#5A7863] text-4xl cursor-pointer font-fascinate text-center px-4 py-2 rounded-md">
-          {currentText}
-        </p>
-      </div>
-
-      <div className="dots absolute bottom-6 left-0 right-0 flex justify-center gap-2">
-        {text.map((_, i) => (
-          <span
-            key={i}
-            className={i === currentIndex ? 'dot dot-active' : 'dot'}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export const textfolder = [
   {
     label: 'motivation',

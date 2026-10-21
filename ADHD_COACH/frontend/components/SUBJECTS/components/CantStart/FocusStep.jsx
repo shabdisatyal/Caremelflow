@@ -9,9 +9,9 @@ export default function FocusStep({ focus, tip, onClose }) {
   const navigate = useNavigate();
   return (
     <ModalShell label="Your one thing" onClose={onClose}>
-      <h2 className="text-2xl font-semibold text-[#4A2F20]">Here is your one thing</h2>
+      <h2 className="text-2xl font-semibold text-[var(--text)]">Here is your one thing</h2>
       {focus ? (
-        <div className="mt-5 rounded-2xl bg-[#3B5B3F] p-5 text-[#FFFAF3]">
+        <div className="mt-5 rounded-2xl bg-[var(--button)] p-5 text-[var(--ink)]">
           <p className="text-sm opacity-80">{focus.why}</p>
           <p className="mt-1 text-xl font-semibold">{focus.task.text}</p>
           <p className="mt-2 text-sm opacity-80">
@@ -26,11 +26,11 @@ export default function FocusStep({ focus, tip, onClose }) {
           </p>
         </div>
       ) : (
-        <p className="mt-5 rounded-2xl bg-white p-5 text-[#4A2F20]">
+        <p className="mt-5 rounded-2xl bg-[var(--panel)] p-5 text-[var(--text)]">
           Nothing is waiting on you. Add something to your calendar when you are ready.
         </p>
       )}
-      {tip && <p className="mt-4 text-sm text-[#7a6a5a]">{tip}</p>}
+      {tip && <p className="mt-4 text-sm text-[var(--text)] opacity-70">{tip}</p>}
       <div className="mt-6 flex items-center justify-between gap-3">
         <button type="button" onClick={onClose} className={quietBtn}>Close</button>
         {focus && (

@@ -47,17 +47,17 @@ export default function Report() {
   }
 
   return (
-    <section className="rounded-3xl border border-[#E6DCC9] bg-white p-6">
+    <section className="rounded-3xl border border-none bg-[var(--panel)] p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-[#4A2F20]">Progress report</h2>
+          <h2 className="text-xl font-semibold text-[var(--text)]">Progress report</h2>
         </div>
         {open && (
           <button
             type="button"
             onClick={close}
             aria-label="Close report"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F4EEE2] text-[#4A2F20] hover:bg-[#EFE6D6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3B5B3F]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--text)] hover:bg-[color-mix(in_srgb,var(--accent)_30%,transparent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button)]"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -77,8 +77,8 @@ export default function Report() {
         </button>
       )}
 
-      {open && loading && <p className="mt-6 text-sm text-[#7a6a5a]">Loading...</p>}
-      {open && error && <p className="mt-6 text-sm font-medium text-red-600">{error}</p>}
+      {open && loading && <p className="mt-6 text-sm text-[var(--text)] opacity-70">Loading...</p>}
+      {open && error && <p className="mt-6 text-sm font-medium text-[var(--error)]">{error}</p>}
 
       {open && report && (
         <div className="mt-6">
@@ -90,13 +90,13 @@ export default function Report() {
               aria-label="Report highlights"
             >
               {report.insights.map((line) => (
-                <li key={line} className="rounded-2xl bg-[#F4EEE2] px-4 py-3 text-sm text-[#4A2F20]">
+                <li key={line} className="rounded-2xl bg-[var(--bg)] px-4 py-3 text-sm text-[var(--text)]">
                   {line}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="mt-5 text-sm text-[#7a6a5a]">
+            <p className="mt-5 text-sm text-[var(--text)] opacity-70">
               Nothing to report yet. Finish a focus session and check back.
             </p>
           )}
