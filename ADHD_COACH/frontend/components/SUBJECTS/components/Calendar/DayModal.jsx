@@ -29,9 +29,7 @@ export default function DayModal({ date, items, onAdd, onRemove, onClose }) {
 
   return (
     <ModalShell label="Day" onClose={onClose}>
-      <h2 className="text-2xl font-semibold text-[var(--text)]">
-        {parseDate(date).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
-      </h2>
+      
 
       {dayItems.length === 0 ? (
         <p className="mt-4 text-sm text-[var(--text)] opacity-70">
@@ -67,7 +65,7 @@ export default function DayModal({ date, items, onAdd, onRemove, onClose }) {
           <label className="block text-sm font-medium text-[var(--text)]" htmlFor="ev-title">What is it?</label>
           <input id="ev-title" value={title} onChange={(e) => setTitle(e.target.value)} className={field} />
 
-          <p className="text-sm font-medium text-[var(--text)]">Type</p>
+          
           <div className="flex flex-wrap gap-2">
             {Object.entries(KIND_LABEL).map(([k, label]) => (
               <Chip key={k} selected={kind === k} onClick={() => setKind(k)}>{label}</Chip>
@@ -80,7 +78,7 @@ export default function DayModal({ date, items, onAdd, onRemove, onClose }) {
             list="subject-tags"
             value={tag}
             onChange={(e) => setTag(e.target.value)}
-            placeholder="Math"
+            
             className={field}
           />
           <datalist id="subject-tags">
@@ -90,7 +88,7 @@ export default function DayModal({ date, items, onAdd, onRemove, onClose }) {
           <label className="block text-sm font-medium text-[var(--text)]" htmlFor="ev-time">Time (optional)</label>
           <input id="ev-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} className={field} />
           <div className="flex items-center justify-between pt-2">
-            <button type="button" onClick={onClose} className={quietBtn}>Done</button>
+            <button type="button" onClick={onClose} className={quietBtn}>Close</button>
             <button className={darkBtn}>Add</button>
           </div>
         </form>

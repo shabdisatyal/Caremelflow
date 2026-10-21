@@ -9,7 +9,7 @@ export default function FocusStep({ focus, tip, onClose }) {
   const navigate = useNavigate();
   return (
     <ModalShell label="Your one thing" onClose={onClose}>
-      <h2 className="text-2xl font-semibold text-[var(--text)]">Here is your one thing</h2>
+      <h2 className="text-2xl font-semibold text-[var(--text)]">Start with this, one thing. </h2>
       {focus ? (
         <div className="mt-5 rounded-2xl bg-[var(--button)] p-5 text-[var(--ink)]">
           <p className="text-sm opacity-80">{focus.why}</p>
@@ -27,7 +27,7 @@ export default function FocusStep({ focus, tip, onClose }) {
         </div>
       ) : (
         <p className="mt-5 rounded-2xl bg-[var(--panel)] p-5 text-[var(--text)]">
-          Nothing is waiting on you. Add something to your calendar when you are ready.
+          Hmm. No deadlines to worry about you can go steady 
         </p>
       )}
       {tip && <p className="mt-4 text-sm text-[var(--text)] opacity-70">{tip}</p>}

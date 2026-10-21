@@ -16,7 +16,7 @@ export default function LogStep({ onSubmit, onClose }) {
   return (
     <ModalShell label="Check in" onClose={onClose}>
       <h2 className="text-2xl font-semibold text-[var(--text)]">Let us check in first</h2>
-      <p className="mt-1 text-sm text-[var(--text)] opacity-70">No wrong answers. This takes under a minute.</p>
+      <p className="mt-1 text-sm text-[var(--text)] opacity-70">Dont worry. This takes under a minute.</p>
 
       <p className="mt-6 text-sm font-medium text-[var(--text)]">How are you feeling?</p>
       <div className="mt-2 flex flex-wrap gap-2">
