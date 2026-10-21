@@ -14,7 +14,7 @@ export const THEMES = {
     vars: {
       '--bg': '#F2EEE3',
       '--panel': '#FFFFFF',
-      '--accent': '#B08A40',
+      '--accent': '#F2EEE3',
       '--button': '#505C30',
       '--ink': '#F2EEE3',
       '--text': '#505C30',

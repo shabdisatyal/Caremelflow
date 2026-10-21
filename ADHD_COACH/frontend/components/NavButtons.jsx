@@ -14,10 +14,10 @@ export function NavButtons() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="w-full flex flex-col items-end pl-6">
+    <div className="w-full font-child flex flex-col items-end pl-6">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center font-child gap-3 bg-[var(--button)] text-[var(--ink)] px-5 py-2 rounded-full hover:opacity-90 transition-opacity cursor-pointer mt-6 mr-7 mb-3"
+        className="flex items-center gap-3 bg-[var(--button)] text-[var(--ink)] px-5 py-2 rounded-full hover:opacity-90 transition-opacity cursor-pointer mt-6 mr-7 mb-3"
       >
         {open ? <X size={18} /> : <Menu size={18} />}
         <span>{open ? 'Close' : ''}</span>
