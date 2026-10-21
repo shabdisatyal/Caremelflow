@@ -108,16 +108,14 @@ export const Signup = () => {
           {/* window content */}
           <div className="p-8">
             <div className="mb-8">
-              <h1 className="text-[var(--text)] text-2xl font-extrabold tracking-tight leading-none">
+              <h1 className="text-[var(--text)] text-2xl font-child tracking-tight leading-none">
                 create account
               </h1>
-              <p className="text-[var(--text)]/60 text-sm mt-1">
-                start building progressive study habits.
-              </p>
+            
             </div>
 
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="flex font-child flex-col gap-6">
               <div>
                 <label className={labelClass}>Email</label>
                 <input
@@ -186,27 +184,27 @@ export const Signup = () => {
               </div>
 
               {errorMsg && (
-                <p className="text-sm text-[var(--error)] -mt-2">{errorMsg}</p>
+                <p className="text-xl text-[var(--error)] -mt-2">{errorMsg}</p>
               )}
 
               {statusMsg && (
-                <p className="text-sm text-[var(--button)] -mt-2">{statusMsg}</p>
+                <p className="text-xl text-[var(--button)] -mt-2">{statusMsg}</p>
               )}
 
              <button
                   type="submit"
                   disabled={loading}
-                  className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-sm font-semibold uppercase tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+                  className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-xl font-child tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
                 >
                   {loading ? "signing up..." : "sign up"}
                 </button>
             </form>
 
-            <div className="flex items-center justify-between mt-6 text-sm">
+            <div className="flex items-center font-child justify-between mt-6 text-xl">
               
               <Link to="/signin" className="text-[var(--text)]/60">
                   have an account?{" "}
-                  <span className="text-[var(--button)] font-semibold">log in</span>
+                  <span className="text-[var(--button)] ">log in</span>
                 </Link>
             </div>
           </div>

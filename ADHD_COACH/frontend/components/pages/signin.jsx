@@ -99,23 +99,19 @@ export const Signin = () => {
             <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
             <span className="w-3 h-3 rounded-full bg-[#28C840]" />
           </div>
-          <p className="absolute left-1/2 -translate-x-1/2 text-xs font-medium text-[var(--muted)]">
-            sign in
-          </p>
+          
         </div>
 
         {/* window content */}
         <div className="p-8">
           <div className="mb-8">
-            <h1 className="text-[var(--text)] text-2xl font-extrabold tracking-tight leading-none">
+            <h1 className="text-[var(--text)] text-3xl font-child tracking-tight leading-none">
               welcome back
             </h1>
-            <p className="text-[var(--muted)] text-sm mt-1">
-              pick up right where you left off.
-            </p>
+          
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit} className="flex font-child flex-col gap-6">
             <div>
               <label className={labelClass}>Email</label>
               <input
@@ -169,17 +165,17 @@ export const Signin = () => {
             <button
                 type="submit"
                 disabled={loading}
-                className="-rotate-1 w-full rounded-full border-[3px] border-[var(--text)] bg-[var(--button)] py-3 text-sm font-semibold uppercase tracking-widest text-[var(--ink)] shadow-[4px_4px_0_var(--muted)] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--muted)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+                className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-sm font-child uppercase tracking-widest text-black shadow-[4px_4px_0_var(--muted)] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--muted)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
               >
                 {loading ? "logging in..." : "login"}
               </button>
           </form>
 
-          <div className="flex items-center justify-between mt-6 text-sm">
+          <div className="flex items-center font-child justify-between mt-6 text-xl">
  
               <Link to="/signup" className="text-[var(--muted)]">
                     new here?{" "}
-                    <span className="text-[var(--text)] font-semibold">create account</span>
+                    <span className="text-[var(--text)]">create account</span>
                   </Link>
           </div>
         </div>
