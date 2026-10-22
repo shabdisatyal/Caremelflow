@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import hero from "../assets/hero.png";
+
 import { useFolderShuffle, textfolder } from "../cardthatremindsyou";
 
 export function Home() {
@@ -16,7 +16,7 @@ export function Home() {
               rgba(255, 250, 243, 0.2),
               rgba(255, 250, 243, 0.2)
             ),
-            url("${hero}")
+            url("src/assets/hero.png")
             
           `,
         }}
