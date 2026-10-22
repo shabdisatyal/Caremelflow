@@ -2,17 +2,14 @@ import { useState } from "react";
 import { supabase } from "../../../supabaseclient";
 import { Link } from 'react-router-dom';
 
-// simple, functional names — bg/panel describe where the color goes,
-// not what the color looks like, so swapping values later stays easy
-
 const theme = {
   "--bg": "#FFFFFF",
-  "--panel": "rgb(254, 249, 233)",       // faint dark glass, sits on white
+  "--panel": "rgb(254, 249, 233)",
   "--panelBorder": "rgba(0,0,0,0.12)",
   "--titlebar": "rgba(0,0,0,0.05)",
   "--border": "rgba(0,0,0,0.2)",
   "--text": "#000000",
-  "--ink": "#FFFFFF",                  // text on the button
+  "--ink": "#FFFFFF",
   "--button": "#000000",
   "--buttonHover": "#333333",
   "--error": "#000000",
@@ -37,30 +34,12 @@ export const Signup = () => {
     setStatusMsg("");
     setLoading(true);
 
-    const emailToCheck = form.email.toLowerCase().trim();
-
     try {
-      
-      const { data: existingUser, error: dbError } = await supabase
-        .from("users")
-        .select("email")
-        .eq("email", emailToCheck)
-        .maybeSingle();
-
-      if (dbError) throw dbError; 
-
-      if (existingUser) {
-        setErrorMsg("User already exists!");
-        setLoading(false);
-        return; 
-      }
-
-      // 2. Proceed with Supabase Auth sign up
       const { data, error } = await supabase.auth.signUp({
         email: form.email,
         password: form.password,
-        emailRedirectTo: `${siteUrl}/profile`,
         options: {
+          emailRedirectTo: `${siteUrl}/profile`,
           data: {
             first_name: form.name,
             age: form.age,
@@ -74,7 +53,7 @@ export const Signup = () => {
         setStatusMsg("Check your email for a verification link to finish setting up your account.");
       }
     } catch (err) {
-      setErrorMsg(err.message || "An unexpected error occurred omg");
+      setErrorMsg(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -94,10 +73,7 @@ export const Signup = () => {
         backgroundSize: "38px 38px",
       }}
     >
-      {/* mac-style window wrapper that tilts the image */}
       <div className="relative w-full z-0 max-w-md">
-
-        {/* background image, hidden until tilted */}
         <img
           src="https://i.pinimg.com/736x/71/f7/3f/71f73f54dada870520d3548ad69600a8.jpg"
           alt="meow"
@@ -108,9 +84,7 @@ export const Signup = () => {
           }}
         />
 
-        {/* mac-style window */}
         <div className="relative w-full bg-[var(--panel)] border border-[var(--panelBorder)] rounded-xl shadow-2xl overflow-hidden">
-          {/* title bar */}
           <div className="relative flex items-center h-10 px-4 bg-[var(--titlebar)] border-b border-[var(--panelBorder)]">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#FF5F57]" />
@@ -119,7 +93,6 @@ export const Signup = () => {
             </div>
           </div>
 
-          {/* window content */}
           <div className="p-8">
             <div className="mb-8">
               <h1 className="text-[var(--text)] text-2xl font-child tracking-tight leading-none">
