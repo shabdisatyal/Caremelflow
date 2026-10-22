@@ -28,7 +28,7 @@ const level = (m) => (m <= 0 ? 0 : m < 30 ? 1 : m < 60 ? 2 : m < 120 ? 3 : 4);
 
 function Card({ title, right, children, className = "" }) {
   return (
-    <section className={`rounded-2xl border border-[#E6DDC6] bg-white p-5 ${className}`}>
+    <section className={`rounded-3xl border border-[#E6DDC6] bg-white p-5 ${className}`}>
       {(title || right) && (
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-sm font-semibold text-[#2B2118]">{title}</h2>
@@ -157,7 +157,7 @@ export function Progress() {
         }),
     ]
       .sort((a, b) => new Date(b.at) - new Date(a.at))
-      .slice(0, 6);
+      .slice(0, 4);
 
     return {
       y,
