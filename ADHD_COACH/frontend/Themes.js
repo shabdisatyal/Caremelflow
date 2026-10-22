@@ -12,9 +12,9 @@ export const THEMES = {
     label: 'Caremel',
     season: 'default',
     vars: {
-      '--bg': '#c2bdaf',
+      '--accent': '#c2bdaf',
       '--panel': '#FFFFFF',
-      '--accent': '#F2EEE3',
+      '--bg': '#F2EEE3',
       '--button': '#505C30',
       '--ink': '#F2EEE3',
       '--text': '#505C30',

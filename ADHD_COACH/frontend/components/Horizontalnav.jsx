@@ -16,7 +16,7 @@ export function HorizontalNav() {
         <h1 className="titletext font-child text-5xl ml-2 text-[var(--text)]">Caremelflow</h1>
       </Link>
 
-      <nav className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4">
+      <nav className="mt-6 flex flex-wrap text-xl items-center justify-center gap-x-8 gap-y-3 px-4">
         {LINKS.map(({ to, label, end }) => (
           <NavLink
             key={to}
