@@ -116,7 +116,7 @@ export default function Manage() {
         <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-24">
           {/* left: stats */}
           <div>
-            <h2 className="font-fascinate text-xl text-black mb-5 pb-3 border-b border-[#EDEAE2]">
+            <h2 className="font-child text-xl text-black mb-5 pb-3 border-b border-[#EDEAE2]">
               My Stats
             </h2>
             <div className="flex items-center gap-2 text-sm text-[#6E6E6E] mb-10">
@@ -139,7 +139,7 @@ export default function Manage() {
           {/* right: decks + manage */}
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-[#EDEAE2]">
-              <h2 className="font-fascinate text-xl text-black">Decks</h2>
+              <h2 className="font-child text-xl text-black">Decks</h2>
             </div>
 
             {/* new deck row */}
@@ -195,7 +195,7 @@ export default function Manage() {
             {/* manage active deck, styled like the Flashcard Decks list */}
             {activeDeck && (
               <div>
-                <h2 className="font-fascinate text-xl text-black mb-5 pb-3 border-b border-[#EDEAE2]">
+                <h2 className="font-child text-xl text-black mb-5 pb-3 border-b border-[#EDEAE2]">
                   {activeDeck.name}
                 </h2>
 

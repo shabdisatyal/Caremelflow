@@ -95,7 +95,7 @@ export function Profile() {
 
   return (
     <div
-      className="min-h-screen w-full bg-[var(--bg)] px-4 py-10"
+      className="min-h-screen font-child w-full bg-[var(--bg)] px-4 py-10"
       
     >
       <div className="mx-auto w-full max-w-6xl bg-[var(--panel)] rounded-xl overflow-hidden">
