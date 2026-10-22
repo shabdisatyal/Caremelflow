@@ -40,9 +40,9 @@ export const Signup = () => {
     const emailToCheck = form.email.toLowerCase().trim();
 
     try {
-      // 1. Check if user already exists in the database profiles table
+      
       const { data: existingUser, error: dbError } = await supabase
-        .from("profiles")
+        .from("users")
         .select("email")
         .eq("email", emailToCheck)
         .maybeSingle();
