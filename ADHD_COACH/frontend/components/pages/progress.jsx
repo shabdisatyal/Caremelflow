@@ -67,11 +67,18 @@ export function Progress() {
         setLoading(false);
         return;
       }
+      
       const [s, p, c] = await Promise.all([
+      
         supabase.from(FOCUS_TABLE).select("duration_minutes, created_at").eq("user_id", uid),
+        
+      
         supabase.from("card_progress").select("card_id, interval, next_review, updated_at").eq("user_id", uid),
-        supabase.from("cards").select("id, deck_id, decks(name)").eq("user_id", uid),
+        
+     
+        supabase.from("cards").select("id, deck_id, decks(name)").eq("created_by", uid),
       ]);
+
       if (!active) return;
       setSessions(s.data || []);
       setProgress(p.data || []);
