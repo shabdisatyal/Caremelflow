@@ -16,8 +16,8 @@ export function Home() {
               rgba(255, 250, 243, 0.2),
               rgba(255, 250, 243, 0.2)
             ),
-            url("src/assets/hero.png")
-            
+            url("/hero.png")
+           
           `,
         }}
       >
