@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { supabase } from "../../../supabaseclient";
 import { Link } from 'react-router-dom';
-import {bloomFilter} from "@lib/bloomFilter";
-
 
 // simple, functional names — bg/panel describe where the color goes,
 // not what the color looks like, so swapping values later stays easy
-
-
 
 const theme = {
   "--bg": "#FFFFFF",
@@ -42,61 +38,46 @@ export const Signup = () => {
     setLoading(true);
 
     const emailToCheck = form.email.toLowerCase().trim();
-    try{
-        const probablyExists = await bloomFilter.exists("users:emails", emailToCheck)
 
-        if (probablyExists){
-          const {data : existingUser, error:dbError} = await supabase
-          .from("profiles")
-          .select("email")
-          .eq("email", emailToCheck)
-          .maybeSingle();
+    try {
+      // 1. Check if user already exists in the database profiles table
+      const { data: existingUser, error: dbError } = await supabase
+        .from("profiles")
+        .select("email")
+        .eq("email", emailToCheck)
+        .maybeSingle();
 
-        if (dbError) throw dbError; 
-        if(existingUser) {
-          setErrorMsg("User already exists!");
-          setLoading(false);
-          return; 
+      if (dbError) throw dbError; 
 
-        }
-
+      if (existingUser) {
+        setErrorMsg("User already exists!");
+        setLoading(false);
+        return; 
       }
+
+      // 2. Proceed with Supabase Auth sign up
       const { data, error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      emailRedirectTo: `${siteUrl}/profile`,
-      options: {
-        data: {
-          first_name: form.name,
-          age: form.age,
+        email: form.email,
+        password: form.password,
+        emailRedirectTo: `${siteUrl}/profile`,
+        options: {
+          data: {
+            first_name: form.name,
+            age: form.age,
+          },
         },
-      },
-    });
+      });
 
-    if(error) {
-      setErrorMsg(error.message); 
-    } else if (data?. user) {
-      setStatusMsg("Registered! Check email for verification");
-
-      await bloomFilter.add("users:email", emailToCheck)
-    }
-    }
-    catch (err)
-    {
-      setErrorMsg(err.message || "An unexpected error occured omg")
+      if (error) {
+        setErrorMsg(error.message); 
+      } else if (data?.user) {
+        setStatusMsg("Check your email for a verification link to finish setting up your account.");
+      }
+    } catch (err) {
+      setErrorMsg(err.message || "An unexpected error occurred omg");
     } finally {
       setLoading(false);
     }
-    
-
-    setLoading(false);
-
-    if (error) {
-      setErrorMsg(error.message);
-      return;
-    }
-
-    setStatusMsg("Check your email for a verification link to finish setting up your account.");
   };
 
   const inputClass =
@@ -121,15 +102,11 @@ export const Signup = () => {
           src="https://i.pinimg.com/736x/71/f7/3f/71f73f54dada870520d3548ad69600a8.jpg"
           alt="meow"
           className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl -z-10 transition-all duration-3500"
-          
-          
           style={{
             transform: tilted ? "translate(-314px, -24px)" : "translate(0px, 1px)",
             opacity: tilted ? 1 : 0,
           }}
         />
-
-    
 
         {/* mac-style window */}
         <div className="relative w-full bg-[var(--panel)] border border-[var(--panelBorder)] rounded-xl shadow-2xl overflow-hidden">
@@ -148,11 +125,9 @@ export const Signup = () => {
               <h1 className="text-[var(--text)] text-2xl font-child tracking-tight leading-none">
                 create account
               </h1>
-            
             </div>
 
-
-            <form onSubmit={handleSubmit} className="flex font-child flex-col gap-6">
+            <form onSubmit={handleSubmit} className="flex text-xl font-child flex-col gap-6">
               <div>
                 <label className={labelClass}>Email</label>
                 <input
@@ -165,7 +140,6 @@ export const Signup = () => {
                   onFocus={() => setTilted(true)}
                 />
               </div>
-
 
               <div>
                 <label className={labelClass}>Name</label>
@@ -228,21 +202,20 @@ export const Signup = () => {
                 <p className="text-xl text-[var(--button)] -mt-2">{statusMsg}</p>
               )}
 
-             <button
-                  type="submit"
-                  disabled={loading}
-                  className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-xl font-child tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
-                >
-                  {loading ? "signing up..." : "sign up"}
-                </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-xl font-child tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+              >
+                {loading ? "signing up..." : "sign up"}
+              </button>
             </form>
 
             <div className="flex items-center font-child justify-between mt-6 text-xl">
-              
               <Link to="/signin" className="text-[var(--text)]/60">
-                  have an account?{" "}
-                  <span className="text-[var(--button)] ">log in</span>
-                </Link>
+                have an account?{" "}
+                <span className="text-[var(--button)]">log in</span>
+              </Link>
             </div>
           </div>
         </div>
