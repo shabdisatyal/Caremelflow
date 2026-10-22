@@ -42,7 +42,7 @@ export const Signin = () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: form.email,
       password: form.password,
-      emailRedirectTo: `${caremelflow.com}/profile`
+      emailRedirectTo: `${siteUrl}/profile`
     });
 
     setLoading(false);
