@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../../supabaseclient";
 import { Link } from 'react-router-dom';
+import {bloomFilter} from "@lib/bloomFilter";
 
 
 // simple, functional names — bg/panel describe where the color goes,
@@ -40,10 +41,30 @@ export const Signup = () => {
     setStatusMsg("");
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signUp({
+    const emailToCheck = form.email.toLowerCase().trim();
+    try{
+        const probablyExists = await bloomFilter.exists("users:emails", emailToCheck)
+
+        if (probablyExists){
+          const {data : existingUser, error:dbError} = await supabase
+          .from("profiles")
+          .select("email")
+          .eq("email", emailToCheck)
+          .maybeSingle();
+
+        if (dbError) throw dbError; 
+        if(existingUser) {
+          setErrorMsg("User already exists!");
+          setLoading(false);
+          return; 
+
+        }
+
+      }
+      const { data, error } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
-      emailRedirectTo: `${siteUrl}/signin`,
+      emailRedirectTo: `${siteUrl}/profile`,
       options: {
         data: {
           first_name: form.name,
@@ -51,6 +72,22 @@ export const Signup = () => {
         },
       },
     });
+
+    if(error) {
+      setErrorMsg(error.message); 
+    } else if (data?. user) {
+      setStatusMsg("Registered! Check email for verification");
+
+      await bloomFilter.add("users:email", emailToCheck)
+    }
+    }
+    catch (err)
+    {
+      setErrorMsg(err.message || "An unexpected error occured omg")
+    } finally {
+      setLoading(false);
+    }
+    
 
     setLoading(false);
 
