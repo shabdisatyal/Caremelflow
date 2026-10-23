@@ -17,8 +17,6 @@ const theme = {
   "--error": "#111111",
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export const ResetPassword = () => {
   const [form, setForm] = useState({ password: "", confirmPassword: "" });
   const [errorMsg, setErrorMsg] = useState("");
@@ -28,21 +26,35 @@ export const ResetPassword = () => {
   const [ready, setReady] = useState(false);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
+    let isMounted = true;
+
+    // 1. Check if user already has an active session (e.g. token already parsed)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (isMounted && session) {
         setReady(true);
       }
     });
-    return () => listener.subscription.unsubscribe();
+
+    // 2. Listen for auth changes (specifically recovery or sign-in events)
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!isMounted) return;
+      
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
+        setReady(true);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  //////////////////////////////////// UPDATE PASSWORD HANDLER ////////////////////////////////////
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -89,7 +101,6 @@ export const ResetPassword = () => {
     }, 1500);
   };
 
-  //////////////////////////////////// UI W TAILWIND SKELETON
   const inputClass =
     "w-full bg-transparent text-[var(--text)] text-sm py-2 border-b border-[var(--border)] outline-none focus:border-[var(--accent)] transition-colors";
   const labelClass = "text-[var(--muted)] text-xs uppercase tracking-wide";
@@ -104,9 +115,7 @@ export const ResetPassword = () => {
         backgroundSize: "38px 38px",
       }}
     >
-      {/* mac-style window */}
       <div className="w-full max-w-md bg-[var(--panel)] border border-[var(--panel-border)] rounded-xl shadow-2xl overflow-hidden">
-        {/* title bar */}
         <div className="relative flex items-center h-10 px-4 bg-[var(--titlebar)] border-b border-[var(--panel-border)]">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-[#FF5F57]" />
@@ -118,15 +127,11 @@ export const ResetPassword = () => {
           </p>
         </div>
 
-        {/* window content */}
         <div className="p-8">
           <div className="mb-8">
             <h1 className="text-[var(--text)] text-2xl font-extrabold tracking-tight leading-none">
               set a new password
             </h1>
-            <p className="text-[var(--muted)] text-sm mt-1">
-              make it something you'll actually remember.
-            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -197,4 +202,3 @@ export const ResetPassword = () => {
     </div>
   );
 };
-
