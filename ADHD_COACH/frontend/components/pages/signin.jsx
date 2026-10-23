@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "../../../supabaseclient";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
-
+import { useNavigate, Link } from "react-router-dom";
 
 const theme = {
   "--bg": "#fdfdfd",
@@ -19,30 +17,29 @@ const theme = {
   "--error": "#111111",
 };
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export const Signin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errorMsg, setErrorMsg] = useState("");
+  const [infoMsg, setInfoMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    
   };
-//////////////////////////////////// LOGIN HANDLER ////////////////////////////////////
+
+  //////////////////////////////////// LOGIN HANDLER ////////////////////////////////////
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setInfoMsg("");
     setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: form.email,
       password: form.password,
-      
     });
 
     setLoading(false);
@@ -52,31 +49,38 @@ export const Signin = () => {
       return;
     }
 
-    navigate("/profile")
     console.log(data);
+    navigate("/profile");
   };
 
-  //////////////////////////////////// FORGOT PASSWORD UPDATE HANDLER ////////////////////////////////////
-  const handleUpdate = async (e) => {
+  //////////////////////////////////// FORGOT PASSWORD HANDLER ////////////////////////////////////
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setInfoMsg("");
 
     if (!form.email) {
-      setErrorMsg("Enter your email above first, then click 'Forgot Password?'");
+      setErrorMsg("Please enter your email above first to reset your password.");
       return;
     }
 
-    
+    setResetLoading(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    setResetLoading(false);
 
     if (error) {
       setErrorMsg(error.message);
       return;
     }
 
-    alert("The password reset link has been sent to your gmail :3", data);
+    setInfoMsg("A password reset link has been sent to your email!");
   };
 
-  //////////////////////////////////// UI W TAILWIND SKELETON 
+  //////////////////////////////////// UI SKELETON
   const inputClass =
     "w-full bg-transparent text-[var(--text)] text-sm py-2 border-b border-[var(--border)] outline-none focus:border-[var(--accent)] transition-colors";
   const labelClass = "text-[var(--muted)] text-xs uppercase tracking-wide";
@@ -100,7 +104,6 @@ export const Signin = () => {
             <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
             <span className="w-3 h-3 rounded-full bg-[#28C840]" />
           </div>
-          
         </div>
 
         {/* window content */}
@@ -109,7 +112,6 @@ export const Signin = () => {
             <h1 className="text-[var(--text)] text-3xl font-child tracking-tight leading-none">
               welcome back
             </h1>
-          
           </div>
 
           <form onSubmit={handleSubmit} className="flex font-child flex-col gap-6">
@@ -122,11 +124,22 @@ export const Signin = () => {
                 onChange={handleChange}
                 autoComplete="username"
                 className={inputClass}
+                required
               />
             </div>
 
             <div className="relative">
-              <label className={labelClass}>Password</label>
+              <div className="flex justify-between items-center mb-1">
+                <label className={labelClass}>Password</label>
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  disabled={resetLoading}
+                  className="text-xs text-[var(--muted)] hover:text-[var(--text)] underline transition-colors disabled:opacity-50"
+                >
+                  {resetLoading ? "sending link..." : "Forgot Password?"}
+                </button>
+              </div>
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -155,29 +168,31 @@ export const Signin = () => {
               </button>
             </div>
 
-           
-
             {errorMsg && (
               <p className="text-sm text-[var(--error)] font-medium -mt-2">
                 {errorMsg}
               </p>
             )}
 
+            {infoMsg && (
+              <p className="text-sm text-green-700 font-medium -mt-2">
+                {infoMsg}
+              </p>
+            )}
+
             <button
-                type="submit"
-                disabled={loading}
-                className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-sm font-child uppercase tracking-widest text-black shadow-[4px_4px_0_var(--muted)] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--muted)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
-              >
-                {loading ? "logging in..." : "login"}
-              </button>
+              type="submit"
+              disabled={loading}
+              className="-rotate-1 w-full rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] py-3 text-sm font-child uppercase tracking-widest text-black shadow-[4px_4px_0_var(--muted)] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--muted)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none"
+            >
+              {loading ? "logging in..." : "login"}
+            </button>
           </form>
 
           <div className="flex items-center font-child justify-between mt-6 text-xl">
- 
-              <Link to="/signup" className="text-[var(--muted)]">
-                    new here?{" "}
-                    <span className="text-[var(--text)]">create account</span>
-                  </Link>
+            <Link to="/signup" className="text-[var(--muted)]">
+              new here? <span className="text-[var(--text)]">create account</span>
+            </Link>
           </div>
         </div>
       </div>
