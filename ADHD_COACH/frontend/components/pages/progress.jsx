@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../../supabaseclient";
+import { wrapStyle } from "../flashcards";
 
 // Tables used:
 // focus_sessions: user_id, duration_minutes, created_at  (create with the SQL provided)
@@ -78,7 +79,7 @@ export function Progress() {
      
         supabase.from("cards").select("id, deck_id, decks(name)").eq("created_by", uid),
       ]);
-
+ 
       if (!active) return;
       setSessions(s.data || []);
       setProgress(p.data || []);
@@ -184,7 +185,15 @@ export function Progress() {
     };
   }, [sessions, cards, progress]);
 
-  if (loading) return <p className="text-sm text-[#8A7B68] py-10">Loading your progress...</p>;
+
+
+  if (loading) {
+    return (
+      <div style={wrapStyle}>
+        <div className="loader" />
+      </div>
+    );
+  }
 
   const monthName = new Date(m.y, m.mo, 1).toLocaleDateString("en-US", { month: "long" });
   const R = 62;
