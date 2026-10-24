@@ -79,7 +79,7 @@ export const Signup = () => {
           alt="meow"
           className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl -z-10 transition-all duration-3500"
           style={{
-            transform: tilted ? "translate(-314px, -24px)" : "translate(0px, 1px)",
+            transform: tilted ? "translate(-470px, -24px)" : "translate(0px, 1px)",
             opacity: tilted ? 1 : 0,
           }}
         />

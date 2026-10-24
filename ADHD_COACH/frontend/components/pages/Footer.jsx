@@ -2,7 +2,7 @@
 
 export function Footer() {
   return (
-    <footer className="FooterContent w-full text-[#BBD5DA] bg-[#FEF9E9]">
+    <footer className="FooterContent w-full text-black font-child bg-[#FEF9E9]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
         <p className="text-sm">
           © {new Date().getFullYear()} CaremelFlow. All rights reserved.
