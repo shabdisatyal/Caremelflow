@@ -1,43 +1,43 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { BookOpen, Layers, Timer, ListChecks, User } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { to: '/subjects', label: 'Subjects' },
-  { to: '/flashcard', label: 'Recall' },
-  { to: '/study', label: 'Study' },
-  { to: '/manage', label: 'Manage' },
-  { to: '/profile', label: 'Profile' },
+  { to: '/subjects', label: 'Subjects', Icon: BookOpen },
+  { to: '/flashcard', label: 'Recall', Icon: Layers },
+  { to: '/study', label: 'Study', Icon: Timer },
+  { to: '/manage', label: 'Manage', Icon: ListChecks },
+  { to: '/profile', label: 'Profile', Icon: User },
 ];
 
 export function NavButtons() {
-  const [open, setOpen] = useState(false);
-
   return (
-    <div className="w-full font-child flex flex-col items-end pl-6">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-3 bg-[var(--button)] text-[var(--ink)] px-5 py-2 rounded-full hover:opacity-90 transition-opacity cursor-pointer mt-6 mr-7 mb-3"
-      >
-        {open ? <X size={18} /> : <Menu size={18} />}
-        <span>{open ? 'Close' : ''}</span>
-      </button>
-
-      <div
-        className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${
-          open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="bg-none py-6 px-4 flex flex-wrap gap-4 justify-center">
-          {NAV_ITEMS.map(({ to, label }) => (
-            <Link key={to} to={to} onClick={() => setOpen(false)}>
-              <div className="flex items-center justify-center bg-[var(--accent)] hover:bg-[var(--bg)] text-[var(--text)] hover:text-[var(--button)] w-32 h-20 rounded-xl cursor-pointer transition-colors">
-                <span className="text-lg font-medium">{label}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+    <nav
+      className="fixed inset-x-3 z-50 font-child bg-[var(--accent)] rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] p-3"
+      style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+    >
+      <ul className="flex items-center  justify-between max-w-md mx-auto">
+        {NAV_ITEMS.map(({ to, label, Icon }) => (
+          <li key={to}>
+            <NavLink
+              to={to}
+              className={({ isActive }) =>
+                `flex items-center gap-2 h-11 rounded-full transition-all duration-300 ${
+                  isActive
+                    ? 'bg-[var(--button)] text-[var(--ink)] px-4'
+                    : 'text-[var(--text)] opacity-60 hover:opacity-100 px-3'
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon size={20} />
+                  {isActive && <span className="text-sm font-medium">{label}</span>}
+                </>
+              )}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

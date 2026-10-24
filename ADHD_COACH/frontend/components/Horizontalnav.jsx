@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const LINKS = [
   { to: '/', label: 'Home', end: true },
@@ -11,12 +11,8 @@ const LINKS = [
 
 export function HorizontalNav() {
   return (
-    <div className="flex flex-col  pt-6 pb-4">
-      <Link to="/">
-        <h1 className="titletext font-child text-5xl ml-2 text-[var(--text)]">Caremelflow</h1>
-      </Link>
-
-      <nav className="mt-6 flex flex-wrap text-xl items-center justify-center gap-x-8 gap-y-3 px-4">
+    <div className="w-full flex flex-col items-center justify-center pt-6 pb-4">
+      <nav className="w-full flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4 text-center">
         {LINKS.map(({ to, label, end }) => (
           <NavLink
             key={to}
