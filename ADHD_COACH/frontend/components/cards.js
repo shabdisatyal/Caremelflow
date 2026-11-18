@@ -56,6 +56,43 @@ export async function addCard(deckId, front, back) {
   if (error) throw error;
   return data;
 }
+
+export async function deleteCard(cardId) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Hm. Looks like you are not logged in.");
+
+  const { error } = await supabase
+    .from("cards")
+    .delete()
+    .eq("id", cardId)
+    .eq("created_by", user.id);
+  if (error) throw error;
+}
+
+export async function deleteDeck(deckId) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Hm. Looks like you are not logged in.");
+
+  // remove the deck's cards first, then the deck itself
+  const { error: cardsErr } = await supabase
+    .from("cards")
+    .delete()
+    .eq("deck_id", deckId)
+    .eq("created_by", user.id);
+  if (cardsErr) throw cardsErr;
+
+  const { error } = await supabase
+    .from("decks")
+    .delete()
+    .eq("id", deckId)
+    .eq("created_by", user.id);
+  if (error) throw error;
+}
+
 //to get card that already exist from deck
 //NOW SCOPED TO THE LOGGED-IN USER: only returns cards this user created
 export async function getCardsInDeck(deckId) {
