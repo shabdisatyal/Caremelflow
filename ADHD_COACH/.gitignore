@@ -25,3 +25,7 @@ dist-ssr
 *.sw?
 
 .env
+
+# Python virtual environment
+venv/
+parser_service/venv/

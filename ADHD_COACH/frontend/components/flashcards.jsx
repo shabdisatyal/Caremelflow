@@ -304,7 +304,7 @@ function SessionComplete({ sessionTotal, nextReview, notifyState, reminderError,
   );
 }
 
-const wrapStyle = {
+export const wrapStyle = {
   minHeight: "100vh",
   width: "100%",
   display: "flex",

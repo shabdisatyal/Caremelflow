@@ -13,8 +13,9 @@ export function Home() {
         style={{
           backgroundImage: `
             linear-gradient(
+              
               rgba(255, 250, 243, 0.2),
-              rgba(255, 250, 243, 0.2)
+              rgba(224, 144, 31, 0.86),
             ),
             url("/hero.png")
            
