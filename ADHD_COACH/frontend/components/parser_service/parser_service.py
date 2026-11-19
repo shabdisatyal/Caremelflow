@@ -5,6 +5,8 @@ import tempfile
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+
+
 from llm import process_file_to_flashcards
 
 app = FastAPI()
@@ -15,7 +17,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
+    allow_origin = ["*"], 
+    
     allow_methods=["*"],
     allow_headers=["*"],
 )
