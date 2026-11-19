@@ -10,9 +10,12 @@ from llm import process_file_to_flashcards
 app = FastAPI()
 
 # Allow the Vite dev server to call this API
+
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
     allow_methods=["*"],
     allow_headers=["*"],
 )

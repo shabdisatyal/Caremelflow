@@ -57,20 +57,25 @@ export async function addCard(deckId, front, back) {
   return data;
 }
 
+//to delete one card
+//.select() returns the deleted rows, so an empty result means RLS blocked it
 export async function deleteCard(cardId) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Hm. Looks like you are not logged in.");
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("cards")
     .delete()
     .eq("id", cardId)
-    .eq("created_by", user.id);
+    .eq("created_by", user.id)
+    .select();
   if (error) throw error;
+  if (!data.length) throw new Error("Card was not deleted. Check the Supabase delete policy.");
 }
 
+//to delete a deck and all its cards
 export async function deleteDeck(deckId) {
   const {
     data: { user },
@@ -85,12 +90,14 @@ export async function deleteDeck(deckId) {
     .eq("created_by", user.id);
   if (cardsErr) throw cardsErr;
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("decks")
     .delete()
     .eq("id", deckId)
-    .eq("created_by", user.id);
+    .eq("created_by", user.id)
+    .select();
   if (error) throw error;
+  if (!data.length) throw new Error("Deck was not deleted. Check the Supabase delete policy.");
 }
 
 //to get card that already exist from deck
