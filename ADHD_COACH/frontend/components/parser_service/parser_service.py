@@ -17,12 +17,16 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin = ["*"], 
-    
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "https://caremelflow.com",
+        "https://www.caremelflow.com",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.post("/api/generate-flashcards")
 async def generate_flashcards(file: UploadFile = File(...)):
