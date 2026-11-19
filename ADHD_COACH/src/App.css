@@ -1,17 +1,31 @@
-body {
-  
-  font-family: "Lexend", sans-serif;
-  background-color: none;
+html {
+  font-size: 25px;
+  overflow-x: hidden;
 }
 
-html {
-  font-size: 25px; 
+@media (max-width: 1024px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  font-family: "Lexend", sans-serif;
+  background-color: transparent;
+  overflow-x: hidden;
+  margin: 0;
 }
 
 .lexend-headerfont {
   font-family: "Lexend", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 2;
+  font-weight: 200;
   font-style: normal;
 }
 
@@ -27,7 +41,6 @@ html {
   font-style: normal;
 }
 
-
 .page-fade {
   animation: fadeIn 0.25s ease-in-out;
 }
@@ -40,5 +53,11 @@ html {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade {
+    animation: none;
   }
 }

@@ -1,19 +1,67 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useFlashcardSession } from "./Useflashcardsession";
 import { useReviewReminder } from "./Usereviewreminder";
 
-const PALETTE = {
-  bg: "#FFFFFF",
-  panel: "#FEF9E9",
-  ring: "#BBD5DA",
-  focus: "#3B4953",
-  break: "#BBD5DA",
-  text: "#000000",
-  textDim: "#6E6E6E",
-};
+const INK_BORDER = "#4A2F20";
+const CARD_SHADOW = "6px 6px 0 #4A2F20";
+const SOFT_SHADOW = "4px 4px 0 #4A2F20";
 
 const TRANSITION_MS = 220;
+
+const CONFETTI_COLORS = ["#FF5F57", "#FFBD2E", "#28C840", "#5AC8FA", "#BF5AF2", "#FF9F0A"];
+
+function ConfettiBurst() {
+  const pieces = Array.from({ length: 42 }, (_, i) => {
+    const left = `${(i * 17 + 7) % 100}%`;
+    const delay = `${(i % 9) * 0.08}s`;
+    const duration = `${1.6 + (i % 5) * 0.25}s`;
+    const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+    const size = i % 3 === 0 ? 10 : 8;
+    const isCircle = i % 4 === 0;
+    return { id: i, left, delay, duration, color, size, isCircle };
+  });
+
+  return (
+    <>
+      <style>{`
+        @keyframes caremel-confetti-fall {
+          0% {
+            transform: translateY(-20px) rotate(0deg);
+            opacity: 1;
+          }
+          85% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) rotate(540deg);
+            opacity: 0;
+          }
+        }
+      `}</style>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-50 overflow-hidden"
+      >
+        {pieces.map((p) => (
+          <span
+            key={p.id}
+            style={{
+              position: "absolute",
+              top: "-16px",
+              left: p.left,
+              width: `${p.size}px`,
+              height: p.isCircle ? `${p.size}px` : `${Math.round(p.size * 0.6)}px`,
+              borderRadius: p.isCircle ? "999px" : "2px",
+              backgroundColor: p.color,
+              animation: `caremel-confetti-fall ${p.duration} ease-in ${p.delay} forwards`,
+            }}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
 
 function formatWhen(isoString) {
   const date = new Date(isoString);
@@ -27,29 +75,6 @@ function formatWhen(isoString) {
   return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-function ProgressDots({ cards, index, known }) {
-  return (
-    <div style={{ display: "flex", gap: "8px" }}>
-      {cards.map((c, i) => (
-        <div
-          key={c.id}
-          style={{
-            width: i === index ? "20px" : "8px",
-            height: "8px",
-            borderRadius: "999px",
-            transition: "all 0.25s ease",
-            background: known.has(c.id)
-              ? PALETTE.focus
-              : i === index
-              ? PALETTE.break
-              : PALETTE.ring,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function FlipCard({ card, index, total, flipped, phase, direction, onFlip }) {
   return (
     <div
@@ -58,12 +83,15 @@ function FlipCard({ card, index, total, flipped, phase, direction, onFlip }) {
       tabIndex={0}
       aria-pressed={flipped}
       onKeyDown={(e) => {
-        if (e.key === " " || e.key === "Enter") e.preventDefault();
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          onFlip();
+        }
       }}
       style={{
         perspective: "1200px",
-        width: "min(420px, 90vw)",
-        height: "260px",
+        width: "min(480px, 92vw)",
+        minHeight: "300px",
         cursor: "pointer",
         opacity: phase === "out" ? 0 : 1,
         transform:
@@ -77,102 +105,49 @@ function FlipCard({ card, index, total, flipped, phase, direction, onFlip }) {
         style={{
           position: "relative",
           width: "100%",
+          minHeight: "300px",
           height: "100%",
           transformStyle: "preserve-3d",
           transition: "transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1)",
           transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
       >
+        {/* Front */}
         <div
+          className="bg-[var(--panel)] text-[var(--text)] flex flex-col items-center justify-center p-10 pb-12 overflow-y-auto text-center"
           style={{
             position: "absolute",
             inset: 0,
             backfaceVisibility: "hidden",
-            background: PALETTE.panel,
-            border: `1px solid ${PALETTE.ring}`,
-            borderRadius: "18px",
-            boxShadow: "0 6px 24px rgba(90,120,99,0.12)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "32px",
-            textAlign: "center",
+            border: `2px solid ${INK_BORDER}`,
+            borderRadius: "16px",
+            boxShadow: CARD_SHADOW,
           }}
         >
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: PALETTE.textDim,
-              marginBottom: "16px",
-            }}
-          >
-            {index + 1} / {total} · question
-          </span>
-          <p
-            style={{
-              fontSize: "20px",
-              fontWeight: 500,
-              color: PALETTE.text,
-              margin: 0,
-              lineHeight: 1.5,
-            }}
-          >
+          
+          <p className="text-xl sm:text-2xl font-medium leading-relaxed m-0 break-words max-w-full">
             {card.front}
           </p>
-          <span
-            style={{
-              position: "absolute",
-              bottom: "18px",
-              fontSize: "12px",
-              color: PALETTE.textDim,
-            }}
-          >
-            tap to flip
-          </span>
+        
         </div>
 
+        {/* Back */}
         <div
+          className="bg-[var(--button)] text-[var(--ink)] flex flex-col items-center justify-center p-10 overflow-y-auto text-center"
           style={{
             position: "absolute",
             inset: 0,
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
-            background: PALETTE.focus,
-            borderRadius: "18px",
-            boxShadow: "0 6px 24px rgba(90,120,99,0.2)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "32px",
-            textAlign: "center",
+            border: `2px solid ${INK_BORDER}`,
+            borderRadius: "16px",
+            boxShadow: CARD_SHADOW,
           }}
         >
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: PALETTE.ring,
-              marginBottom: "16px",
-            }}
-          >
+          <span className="text-xs font-semibold tracking-[0.12em] uppercase opacity-75 mb-4 shrink-0">
             answer
           </span>
-          <p
-            style={{
-              fontSize: "20px",
-              fontWeight: 500,
-              color: "#FFFFFF",
-              margin: 0,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="text-xl sm:text-2xl font-medium leading-relaxed m-0 break-words max-w-full">
             {card.back}
           </p>
         </div>
@@ -182,44 +157,31 @@ function FlipCard({ card, index, total, flipped, phase, direction, onFlip }) {
 }
 
 function ReviewActions({ submitting, saveError, onMarkKnown }) {
+  const secondaryBtn =
+    "-rotate-1 rounded-full border-[3px] border-[#4A2F20] bg-[var(--panel)] px-5 py-2 text-base tracking-wider text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none cursor-pointer";
+  const primaryBtn =
+    "rotate-1 rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] px-5 py-2 text-base tracking-wider text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:-rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none cursor-pointer";
+
   return (
     <>
       {saveError && (
-        <p style={{ color: "#B3452F", fontSize: "13px", margin: 0 }}>{saveError}</p>
+        <p className="text-sm font-medium text-[#B3452F] m-0">{saveError}</p>
       )}
 
-      <div style={{ display: "flex", gap: "12px" }}>
+      <div className="flex items-center gap-4 pt-1">
         <button
+          type="button"
           onClick={() => onMarkKnown(false)}
           disabled={submitting}
-          style={{
-            padding: "10px 18px",
-            borderRadius: "999px",
-            border: `1px solid ${PALETTE.ring}`,
-            background: PALETTE.panel,
-            color: PALETTE.textDim,
-            fontSize: "14px",
-            fontWeight: 500,
-            cursor: submitting ? "default" : "pointer",
-            opacity: submitting ? 0.6 : 1,
-          }}
+          className={secondaryBtn}
         >
           still learning
         </button>
         <button
+          type="button"
           onClick={() => onMarkKnown(true)}
           disabled={submitting}
-          style={{
-            padding: "10px 18px",
-            borderRadius: "999px",
-            border: "none",
-            background: PALETTE.focus,
-            color: "#FFFFFF",
-            fontSize: "14px",
-            fontWeight: 500,
-            cursor: submitting ? "default" : "pointer",
-            opacity: submitting ? 0.6 : 1,
-          }}
+          className={primaryBtn}
         >
           {submitting ? "saving..." : "got it"}
         </button>
@@ -229,78 +191,50 @@ function ReviewActions({ submitting, saveError, onMarkKnown }) {
 }
 
 function SessionNav({ onPrev, onNext, knownCount, sessionTotal }) {
-  const navBtnStyle = {
-    width: "36px",
-    height: "36px",
-    borderRadius: "50%",
-    border: `1px solid ${PALETTE.ring}`,
-    background: PALETTE.panel,
-    color: PALETTE.text,
-    fontSize: "16px",
-    cursor: "pointer",
-  };
+  const navBtnClass =
+    "w-10 h-10 rounded-full border-2 border-[#4A2F20] bg-[var(--panel)] text-[#4A2F20] text-lg flex items-center justify-center shadow-[3px_3px_0_#4A2F20] hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer";
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-      <button onClick={onPrev} aria-label="Previous card" style={navBtnStyle}>
+    <div className="flex items-center gap-5">
+      <button type="button" onClick={onPrev} aria-label="Previous card" className={navBtnClass}>
         ‹
       </button>
-      <span style={{ fontSize: "13px", color: PALETTE.textDim }}>
+      <span className="text-sm text-[var(--text)] opacity-70">
         {knownCount} / {sessionTotal} known
       </span>
-      <button onClick={onNext} aria-label="Next card" style={navBtnStyle}>
+      <button type="button" onClick={onNext} aria-label="Next card" className={navBtnClass}>
         ›
       </button>
     </div>
   );
 }
 
-function SessionComplete({ sessionTotal, nextReview, notifyState, reminderError, onNotifyMe }) {
+function SessionComplete({ sessionTotal, nextReview }) {
   const justFinished = sessionTotal > 0;
-  const notifyBtnStyle = {
-    padding: "8px 16px",
-    borderRadius: "999px",
-    border: "none",
-    background: PALETTE.focus,
-    color: "#FFFFFF",
-    fontSize: "13px",
-    fontWeight: 500,
-    cursor: "pointer",
-    marginTop: "4px",
-  };
 
   return (
-    <>
-     
-      <p style={{ color: PALETTE.text, fontWeight: 600, fontSize: "20px", margin: 0 }}>
+    <div
+      className="w-full max-w-md rounded-2xl bg-[var(--panel)] text-[var(--text)] p-10 text-center flex flex-col items-center gap-3"
+      style={{
+        border: `2px solid ${INK_BORDER}`,
+        boxShadow: SOFT_SHADOW,
+      }}
+    >
+      <p className="font-semibold text-2xl m-0">
         {justFinished ? "You're done for today!" : "All caught up"}
       </p>
-      <p style={{ color: PALETTE.textDim, fontSize: "14px", textAlign: "center", maxWidth: "280px" }}>
+      <p className="opacity-70 text-base max-w-[300px] m-0">
         {justFinished
           ? `Nice work, you got through ${sessionTotal} card${sessionTotal === 1 ? "" : "s"} today.`
           : "No cards due right now. Check back later."}
       </p>
 
       {nextReview && (
-        <p style={{ color: PALETTE.text, fontSize: "14px", marginTop: "4px" }}>
+        <p className="text-sm mt-2 opacity-80">
           Next review: {formatWhen(nextReview)}
         </p>
       )}
-
-      {/* {nextReview && notifyState === "idle" && (
-        // <button onClick={onNotifyMe} style={notifyBtnStyle}>
-        //   Remind me
-        // </button>
-      )}
-      {notifyState === "scheduled" && (
-        <p style={{ color: PALETTE.textDim, fontSize: "13px" }}>
-          We'll email you when it's due.
-        </p>
-      )}
-      {reminderError && (
-        <p style={{ color: "#B3452F", fontSize: "13px" }}>{reminderError}</p>
-      )} */}
-    </>
+    </div>
   );
 }
 
@@ -311,16 +245,15 @@ export const wrapStyle = {
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "20px",
-  background: PALETTE.bg,
+  gap: "22px",
+  background: "var(--bg)",
+  color: "var(--text)",
   padding: "48px 24px",
-  fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
   boxSizing: "border-box",
 };
 
 export function Flashcard({ deckId = null }) {
   const {
-    cards,
     card,
     total,
     index,
@@ -338,14 +271,23 @@ export function Flashcard({ deckId = null }) {
     markKnown,
   } = useFlashcardSession(deckId);
 
-  const { nextReview, notifyState, reminderError, handleNotifyMe } = useReviewReminder({
+  const { nextReview } = useReviewReminder({
     deckId,
     loading,
     total,
     sessionTotal,
   });
 
-  // arrow-key / space / enter shortcuts
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (!loading && total === 0 && sessionTotal > 0) {
+      setShowConfetti(true);
+      const timer = setTimeout(() => setShowConfetti(false), 3200);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, total, sessionTotal]);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowRight") handleNext();
@@ -361,7 +303,7 @@ export function Flashcard({ deckId = null }) {
 
   if (loading) {
     return (
-      <div style={wrapStyle}>
+      <div className="font-child" style={wrapStyle}>
         <div className="loader" />
       </div>
     );
@@ -369,22 +311,15 @@ export function Flashcard({ deckId = null }) {
 
   if (total === 0) {
     return (
-      <div style={wrapStyle}>
-        <SessionComplete
-          sessionTotal={sessionTotal}
-          nextReview={nextReview}
-          notifyState={notifyState}
-          reminderError={reminderError}
-          onNotifyMe={handleNotifyMe}
-        />
+      <div className="font-child" style={wrapStyle}>
+        {showConfetti && <ConfettiBurst />}
+        <SessionComplete sessionTotal={sessionTotal} nextReview={nextReview} />
       </div>
     );
   }
 
   return (
-    <div style={wrapStyle}>
-      <ProgressDots cards={cards} index={index} known={known} />
-
+    <div className="font-child" style={wrapStyle}>
       <FlipCard
         card={card}
         index={index}

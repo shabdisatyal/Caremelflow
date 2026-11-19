@@ -9,7 +9,7 @@ const plural = (n) => (n === 1 ? "" : "s");
 const FILTERS = [["all", "all"], ["cards", "has cards"], ["empty", "empty"]];
 
 const label = "text-black/60 text-xs uppercase tracking-wide";
-const input = "w-full bg-transparent text-black text-lg py-2 border-b border-black/20 outline-none focus:border-black transition-colors";
+const input = "w-full min-w-0 bg-transparent text-black text-lg py-2 border-b border-black/20 outline-none focus:border-black transition-colors";
 const btn = "-rotate-1 rounded-full border-[3px] border-[#4A2F20] bg-[#F6C945] px-6 py-2 text-lg font-child tracking-widest text-[#4A2F20] shadow-[4px_4px_0_#4A2F20] transition-all hover:rotate-1 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-60 disabled:pointer-events-none cursor-pointer";
 const choice = "rounded-xl border-2 border-black/20 hover:border-[#4A2F20] transition p-6 flex flex-col items-center text-center";
 
@@ -174,27 +174,27 @@ export default function Manage() {
 
   return (
     <div
-      className="min-h-screen w-full bg-white font-child px-4 py-14"
+      className="min-h-screen w-full overflow-x-hidden bg-white font-child px-5 sm:px-8 pt-10 pb-28 sm:py-14"
       style={{
         backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.2) 1px, transparent 1px)",
         backgroundSize: "38px 38px",
       }}
     >
-      <div className="w-full max-w-4xl mx-auto">
+      <div className="w-full max-w-4xl min-w-0 mx-auto">
         {error && <p className="mb-6 text-lg text-[#B3452F]">{error}</p>}
 
-        <div className="flex items-end justify-between mb-10">
+        <div className="flex items-center justify-between mb-9">
           <button onClick={openCreate} className={btn}>+ create</button>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-end gap-5 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end gap-5 mb-9">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="search decks"
             className={`${input} flex-1`}
           />
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2.5 shrink-0">
             {FILTERS.map(([key, text]) => (
               <button
                 key={key}
@@ -209,15 +209,15 @@ export default function Manage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-7">
           {visibleDecks.map((deck) => (
             <button
               key={deck.id}
               onClick={() => openDeck(deck)}
-              className="text-left h-44 rounded-xl border-2 border-[#4A2F20] p-5 flex flex-col justify-between shadow-[4px_4px_0_#4A2F20] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
+              className="w-full min-w-0 text-left min-h-40 rounded-xl border-2 border-[#4A2F20] p-6 flex flex-col justify-between gap-4 shadow-[4px_4px_0_#4A2F20] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#4A2F20] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
               style={{ background: colorFor(deck.id) }}
             >
-              <p className="text-2xl leading-tight text-[#4A2F20]">{deck.name}</p>
+              <p className="text-2xl leading-snug text-[#4A2F20] break-words">{deck.name}</p>
               <p className="text-base text-[#4A2F20]/70">
                 {countOf(deck.id)} flashcard{plural(countOf(deck.id))}
               </p>
