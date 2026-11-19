@@ -7,6 +7,8 @@ import { ThemePicker } from "../Themepicker";
 import { applyTheme, THEMES } from "../../Themes";
 
 const HAIR = "color-mix(in srgb, var(--text) 12%, transparent)";
+const PANEL_BORDER = "color-mix(in srgb, var(--text) 14%, transparent)";
+const TITLEBAR_BG = "color-mix(in srgb, var(--text) 5%, transparent)";
 const muted = "text-[var(--text)] opacity-60";
 
 const TABS = [
@@ -41,7 +43,6 @@ export function Profile() {
     });
   }, []);
 
-  // close on Escape + lock page scroll while the modal is open
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === "Escape" && closeModal();
@@ -85,7 +86,6 @@ export function Profile() {
     run({ email: newEmail }, "Check your inbox to confirm the new email.");
   };
 
-  // picking a sticker saves it right away, no save button
   const handlePickAvatar = (id) => {
     setSelected(id);
     run({ data: { avatar_id: id } }, "Picture updated.");
@@ -127,7 +127,6 @@ export function Profile() {
   return (
     <div className="min-h-screen font-child w-full bg-[var(--panel)] text-[var(--text)] px-6 py-12">
       <div className="mx-auto w-full max-w-5xl">
-        {/* header */}
         <header className="flex items-center gap-6 pb-8 border-b" style={{ borderColor: HAIR }}>
           <div className="w-20 h-20 rounded-full shrink-0 overflow-hidden bg-[var(--bg)]">
             <img
@@ -146,13 +145,11 @@ export function Profile() {
           </button>
         </header>
 
-        {/* progress */}
         <main className="pt-10">
           <Progress />
         </main>
       </div>
 
-      {/* settings modal */}
       {open && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/30 backdrop-blur-sm"
@@ -163,9 +160,25 @@ export function Profile() {
             aria-modal="true"
             aria-label="Settings"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md max-h-[85vh] overflow-y-auto rounded-3xl bg-[var(--panel)] text-[var(--text)] shadow-2xl"
+            className="w-full max-w-md max-h-[85vh] overflow-y-auto rounded-xl border bg-[var(--panel)] text-[var(--text)] shadow-2xl overflow-hidden"
+            style={{ borderColor: PANEL_BORDER }}
           >
-            {/* tabs */}
+            <div
+              className="flex items-center h-10 px-4 border-b"
+              style={{ background: TITLEBAR_BG, borderColor: PANEL_BORDER }}
+            >
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  aria-label="Close settings"
+                  className="w-3 h-3 rounded-full bg-[#FF5F57]"
+                />
+                <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                <span className="w-3 h-3 rounded-full bg-[#28C840]" />
+              </div>
+            </div>
+
             <nav className="flex border-b" style={{ borderColor: HAIR }}>
               {TABS.map(({ id, label }) => {
                 const active = tab === id;
@@ -187,17 +200,16 @@ export function Profile() {
             </nav>
 
             <div className="p-7 min-h-[22rem] flex flex-col">
-              <div className="flex-1">
+              <div className="flex-1 border-none">
                 {tab === "picture" && (
                   <div>
-                    <Label>Profile picture</Label>
+                  
                     <Stickers selected={selected} onSelect={handlePickAvatar} />
                   </div>
                 )}
 
                 {tab === "theme" && (
                   <div>
-                   
                     <ThemePicker onChange={(id) => run({ data: { theme: id } }, "Theme saved.")} />
                   </div>
                 )}
@@ -239,24 +251,25 @@ export function Profile() {
                         )}
                       </div>
                     </form>
-                    <div className="mt-8 pt-5 border-t flex items-center justify-between gap-4" style={{ borderColor: HAIR }}>
-                <p className={`text-xs ${errorMsg ? "text-[var(--error)] font-medium" : muted}`}>
-                  {errorMsg || statusMsg}
-                </p>
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className={`text-xs shrink-0 hover:opacity-100 transition-opacity ${muted}`}
-                >
-                  Sign out
-                </button>
-              </div>
+
+                    <div
+                      className="mt-8 pt-5 border-t flex items-center justify-between gap-4"
+                      style={{ borderColor: HAIR }}
+                    >
+                      <p className={`text-xs ${errorMsg ? "text-[var(--error)] font-medium" : muted}`}>
+                        {errorMsg || statusMsg}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={handleSignOut}
+                        className={`text-xs shrink-0 hover:opacity-100 transition-opacity ${muted}`}
+                      >
+                        Sign out
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
-
-             
-              
             </div>
           </div>
         </div>

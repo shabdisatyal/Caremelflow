@@ -17,8 +17,8 @@ export function Stickers({selected, onSelect}) {
                         onClick={() => onSelect(icon.id)}
                         className={
                             selected === icon.id
-                            ? "aspect-square overflow-hidden rounded-xl bg-amber-100 border-4 border-amber-600 p-2"
-                            : "aspect-square overflow-hidden rounded-xl bg-amber-100 border-4 border-black p-2"
+                            ? "aspect-square overflow-hidden rounded-xl bg-amber-100 border-4 border-amber-200 p-2"
+                            : "aspect-square overflow-hidden rounded-xl bg-amber-100 border-4 border-none p-2"
                         }
                         >
                              <img src ={icon.icon} className="w-full h-full object-cover"/> 

@@ -138,7 +138,10 @@ export default function Manage() {
       const cards = Array.isArray(raw) ? raw : raw.flashcards || Object.values(raw).find(Array.isArray) || [];
       if (!cards.length) throw new Error("No flashcards could be extracted from this document.");
 
-      const deck = await addDeck(file.name.replace(/\.[^/.]+$/, ""));
+      const deck = await addDeck(
+        data.deck_name?.trim() || file.name.replace(/\.[^/.]+$/, "")
+    );
+    
       for (const c of cards) await addCard(deck.id, c.front, c.back);
       setDecks((d) => [deck, ...d]);
       setCardCounts((p) => ({ ...p, [deck.id]: cards.length }));
@@ -248,10 +251,19 @@ export default function Manage() {
                     className="hidden"
                   />
                 </label>
-                <button onClick={() => setStep("manual")} disabled={uploadingFile} className={choice}>
+
+
+                <button
+                    onClick={() => setStep("manual")}
+                    disabled={uploadingFile}
+                    className={`${choice} transition duration-300 ${
+                      uploadingFile ? "blur-sm opacity-60 pointer-events-none" : ""
+                    }`}
+                  >
                   <span className="text-xl">add it yourself</span>
                   <span className="text-sm text-black/60 mt-1">Name it, then write your own cards</span>
-                </button>
+
+                  </button>
               </div>
             </>
           ) : (

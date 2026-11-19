@@ -1,6 +1,9 @@
-
 {
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "frontend/components/parser_service/parser_service.py"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

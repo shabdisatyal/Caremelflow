@@ -22,11 +22,14 @@ def process_file_to_flashcards(file_path: str):
     
     print("Generating structured JSON flashcards with Llama 3 via Ollama...")
     
+
     prompt = f"""
     You are an expert study material generator optimized for active recall. Given the following document text, extract the core concepts, definitions, and high-yield facts into concise flashcards.
-    You MUST return a JSON object with a single key "flashcards" whose value is an array of objects with "front" and "back" keys. No extra text outside the JSON.
-        
-        {{"flashcards": [{{"front": "What is X?", "back": "X is Y."}}]}}
+    You MUST return a JSON object with two keys:
+    - "deck_name": a short title for the deck, max 4 words, no punctuation
+    - "flashcards": an array of objects with "front" and "back" keys
+    No extra text outside the JSON.
+        {{"deck_name": "Cell Biology Basics", "flashcards": [{{"front": "What is X?", "back": "X is Y."}}]}}
 
     Document Text:
     {markdown_text}
