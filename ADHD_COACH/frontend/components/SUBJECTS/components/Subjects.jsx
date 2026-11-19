@@ -55,12 +55,7 @@ export function Subjects() {
       }}
     >
       <div className="mx-auto max-w-7xl">
-        <header className="mb-12">
-          
-          <p className="text-lg text-black/60">
-            {left === 0 ? 'nothing left to do today' : `${left} to do today`}
-          </p>
-        </header>
+        
 
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-8">

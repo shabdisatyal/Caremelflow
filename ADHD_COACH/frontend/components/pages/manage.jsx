@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { getDecks, addCard, addDeck, deleteCard, deleteDeck, getCardsInDeck, getDeckCardCounts } from "../cards.js";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 const COLORS = ["#BBD5DA", "#F4D9C6", "#D9D2F0", "#C9E4C5", "#F0D6DE"];
 const colorFor = (id) => COLORS[[...String(id)].reduce((a, c) => a + c.charCodeAt(0), 0) % COLORS.length];
 const plural = (n) => (n === 1 ? "" : "s");
@@ -131,7 +133,7 @@ export default function Manage() {
     body.append("file", file);
 
     const ok = await attempt(async () => {
-      const res = await fetch("http://localhost:8000/api/generate-flashcards", { method: "POST", body });
+      const res = await fetch(`${API_URL}/api/generate-flashcards`, { method: "POST", body });
       if (!res.ok) throw new Error("Failed to process document on backend.");
       const data = await res.json();
       const raw = data.flashcards ?? data;
@@ -140,12 +142,11 @@ export default function Manage() {
 
       const deck = await addDeck(
         data.deck_name?.trim() || file.name.replace(/\.[^/.]+$/, "")
-    );
-    
+      );
+
       for (const c of cards) await addCard(deck.id, c.front, c.back);
       setDecks((d) => [deck, ...d]);
       setCardCounts((p) => ({ ...p, [deck.id]: cards.length }));
-      setUploadingFile(false);
       openDeck(deck);
     });
 
@@ -183,7 +184,6 @@ export default function Manage() {
         {error && <p className="mb-6 text-lg text-[#B3452F]">{error}</p>}
 
         <div className="flex items-end justify-between mb-10">
-          
           <button onClick={openCreate} className={btn}>+ create</button>
         </div>
 
@@ -235,7 +235,6 @@ export default function Manage() {
         <Popup onClose={closeModal}>
           {step === "choose" ? (
             <>
-              
               <p className="text-lg text-black/60 mb-8">How do you want to start?</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <label className={`${choice} border-dashed cursor-pointer`}>
@@ -252,18 +251,15 @@ export default function Manage() {
                   />
                 </label>
 
-
                 <button
-                    onClick={() => setStep("manual")}
-                    disabled={uploadingFile}
-                    className={`${choice} transition duration-300 ${
-                      uploadingFile ? "blur-sm opacity-60 pointer-events-none" : ""
-                    }`}
-                  >
+                  onClick={() => setStep("manual")}
+                  disabled={uploadingFile}
+                  className={`${choice} transition duration-300 ${
+                    uploadingFile ? "blur-sm opacity-60 pointer-events-none" : ""
+                  }`}
+                >
                   <span className="text-xl">add it yourself</span>
-                 
-
-                  </button>
+                </button>
               </div>
             </>
           ) : (
@@ -291,7 +287,6 @@ export default function Manage() {
       {modal === "deck" && activeDeck && (
         <Popup onClose={closeModal}>
           <div className="flex items-start justify-between gap-4 mb-6">
-          
             <button
               onClick={handleDeleteDeck}
               className="shrink-0 text-base text-black/40 hover:text-[#B3452F] transition-colors"
@@ -302,11 +297,11 @@ export default function Manage() {
 
           <div className="flex flex-col gap-5 mb-8">
             <div>
-              <label className={label}>Front (question)</label>
+              <label className={label}>Question</label>
               <input value={front} onChange={(e) => setFront(e.target.value)} className={input} />
             </div>
             <div>
-              <label className={label}>Back (answer)</label>
+              <label className={label}> Answer </label>
               <input
                 value={back}
                 onChange={(e) => setBack(e.target.value)}
@@ -314,7 +309,7 @@ export default function Manage() {
                 className={input}
               />
             </div>
-            <button onClick={handleAddCard} className={`${btn} self-start`}>add card</button>
+            <button onClick={handleAddCard} className={`${btn} self-start`}>Add</button>
           </div>
 
           {loadingCards ? (
