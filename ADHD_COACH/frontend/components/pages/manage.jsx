@@ -241,7 +241,7 @@ export default function Manage() {
                 <label className={`${choice} border-dashed cursor-pointer`}>
                   <span className="text-xl">{uploadingFile ? "cooking..." : "upload"}</span>
                   <span className="text-sm text-black/60 mt-1">
-                    {uploadingFile ? "Cards are fluffy & rising" : "We'll bake your deck"}
+                    {uploadingFile ? "Cards are fluffy & rising" : " "}
                   </span>
                   <input
                     type="file"
@@ -261,7 +261,7 @@ export default function Manage() {
                     }`}
                   >
                   <span className="text-xl">add it yourself</span>
-                  <span className="text-sm text-black/60 mt-1">Name it, then write your own cards</span>
+                 
 
                   </button>
               </div>
