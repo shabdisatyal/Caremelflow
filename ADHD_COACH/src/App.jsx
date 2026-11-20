@@ -7,6 +7,7 @@ import { ProtectedRoute } from '../frontend/components/ProtectedRoute';
 import { NavButtons } from '../frontend/components/NavButtons';
 import { HorizontalNav } from '../frontend/components/Horizontalnav';
 import { Home } from '../frontend/components/pages/home';
+import { StudyProvider } from '../frontend/components/StudyContext';
 import Manage from '../frontend/components/pages/manage';
 import { Flashcard } from '../frontend/components/flashcards';
 import { Study } from '../frontend/components/pages/study';
@@ -96,9 +97,11 @@ function App() {
         <h1 className="titletext font-child ml-8 text-5xl">Caremelflow</h1>
       </Link>
       <AuthProvider>
-        <Header />
-        <AnimatedRoutes />
-        <Footer />
+        <StudyProvider>
+          <Header />
+          <AnimatedRoutes />
+          <Footer />
+        </StudyProvider>
       </AuthProvider>
     </div>
   );

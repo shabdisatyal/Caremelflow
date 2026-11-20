@@ -1,5 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BACKGROUNDS, fmt, useStudy } from "./Usestudy";
+import clickSound from "/src/assets/click.mp3";
+import { useStudyCtx } from "../StudyContext";
+
 
 const YELLOW = "#F6C945";
 const BLUE = "#BBD5DA";
@@ -34,13 +37,55 @@ export function Study() {
     totalFocus, totalBreak, phases, phaseIndex, isFocus,
     remaining, running, finished, inProgress, progress,
     toggleRun, reset, toast,
-  } = useStudy();
+  } = useStudyCtx();
+
+  const [showExit, setShowExit] = useState(false);
+  const audioRef = useRef(new Audio(clickSound));
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setShowSettings(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [setShowSettings]);
+
+  // fullscreen exited mid-session -> ask
+  useEffect(() => {
+    const onFs = () => {
+      if (!document.fullscreenElement && inProgress && !finished) setShowExit(true);
+    };
+    document.addEventListener("fullscreenchange", onFs);
+    return () => document.removeEventListener("fullscreenchange", onFs);
+  }, [inProgress, finished]);
+
+  const handleClick = () => {
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+    if (!running && !document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    }
+    toggleRun();
+  };
+
+
+  // "I'll be back" -> pause
+  const handleBack = () => {
+    if (running) toggleRun();
+    setShowExit(false);
+  };
+
+  // "I'm done" -> reset if < 10% of focus time, else alert it saves
+  const handleDone = () => {
+    const done =
+      phases
+        .slice(0, phaseIndex)
+        .filter((p) => p.type === "focus")
+        .reduce((s, p) => s + p.duration, 0) +
+      (isFocus ? progress * phases[phaseIndex].duration : 0);
+
+    if (done >= 0.1 * totalFocus * 60) alert("it will save as is");
+    reset(true);
+    setShowExit(false);
+  };
 
   const ink = bgOpt.dark ? "var(--bg)" : "var(--text)";
   const dot = `color-mix(in srgb, ${ink} 20%, transparent)`;
@@ -60,7 +105,6 @@ export function Study() {
       }}
     >
       <header className="flex items-center justify-between w-full max-w-4xl mx-auto px-4 pt-14">
-       
         <button
           onClick={() => setShowSettings(true)}
           className="rounded-full border-2 px-5 py-1.5 text-lg transition-colors hover:bg-[color-mix(in_srgb,currentColor_10%,transparent)] border-[color-mix(in_srgb,currentColor_40%,transparent)]"
@@ -106,15 +150,8 @@ export function Study() {
         </div>
 
         <div className="flex items-center gap-6">
-          <button onClick={toggleRun} className={btn}>
+          <button onClick={handleClick} className={btn}>
             {finished ? "start again" : running ? "pause" : inProgress ? "resume" : "start"}
-          </button>
-          <button
-            onClick={() => reset(true)}
-            disabled={!inProgress}
-            className="text-xl opacity-70 hover:opacity-100 disabled:opacity-30 disabled:pointer-events-none transition-opacity"
-          >
-            end session
           </button>
         </div>
       </main>
@@ -187,6 +224,17 @@ export function Study() {
             {totalFocus} min focus and {totalBreak} min break in total.
             {inProgress && " End the session to change length or breaks."}
           </p>
+        </Popup>
+      )}
+
+      {showExit && (
+        <Popup onClose={() => {}}>
+          <h2 className="text-2xl mb-2">Wait!</h2>
+          <p className="text-base text-black/60 mb-6">Out Of Focus? Your Progress Might Reset</p>
+          <div className="flex gap-4">
+            <button onClick={handleBack} className={btn}>I'll be back</button>
+            <button onClick={handleDone} className={btn}>I'm done</button>
+          </div>
         </Popup>
       )}
 
